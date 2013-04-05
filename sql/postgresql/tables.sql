@@ -1,0 +1,45 @@
+/*==============================================================*/
+/* Nom de SGBD :  PostgreSQL 8 (WFW)                            */
+/* Date de création :  05/04/2013 16:07:03                      */
+/*==============================================================*/
+
+
+drop table if exists IO_PACKET  CASCADE;
+
+drop table if exists IO_UPLOAD  CASCADE;
+
+/*==============================================================*/
+/* Table : IO_PACKET                                            */
+/*==============================================================*/
+create table IO_PACKET (
+   IO_PACKET_ID         INT4                 not null,
+   IO_UPLOAD_ID         VARCHAR(8)           not null,
+   PACKET_DATA          CHAR(524288)         not null,
+   PACKET_STATUS        BOOL                 not null,
+   PACKET_COUNT         INT4                 not null,
+   constraint PK_IO_PACKET primary key (IO_PACKET_ID)
+);
+
+/*==============================================================*/
+/* Table : IO_UPLOAD                                            */
+/*==============================================================*/
+create table IO_UPLOAD (
+   IO_UPLOAD_ID         VARCHAR(8)           not null,
+   CHECKSUM             VARCHAR(256)         null,
+   PACKET_SIZE          INT4                 not null,
+   FILENAME             VARCHAR(260)         not null,
+   OUTPUT_PATH          VARCHAR(260)         null,
+   UPLOAD_PATH          VARCHAR(260)         not null,
+   CLIENT_IP            VARCHAR(200)         not null,
+   BEGIN_DATE           TIMESTAMP            not null,
+   FILE_SIZE            INT4                 not null,
+   UPLOAD_COMPLETE      BOOL                 not null,
+   PACKET_COUNT         INT4                 not null,
+   constraint PK_IO_UPLOAD primary key (IO_UPLOAD_ID)
+);
+
+alter table IO_PACKET
+   add constraint FK_IO_STOCKER foreign key (IO_UPLOAD_ID)
+      references IO_UPLOAD (IO_UPLOAD_ID)
+      on delete restrict on update restrict;
+

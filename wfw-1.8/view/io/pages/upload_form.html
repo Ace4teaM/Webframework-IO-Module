@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--(C)2010-ID-Informatik-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:template="http://www.webframework.fr/last/xmlns/template" xml:lang="fr" lang="fr" dir="ltr">
+<head>
+    <script type="text/javascript" src="lib/io/IO.js"></script>
+    <script type="text/javascript">
+        YUI.add('wfw-io', function (Y) {
+            var wfw = Y.namespace('wfw');
+            alert("hello");
+        }, '1.0', {
+            requires:['wfw-io']
+        });
+    </script>
+</head>
+
+<!-- Document -->
+<body>
+
+    <h1>Envoyer un fichier</h1>
+    <div>Fichier: <input id="file" name="file" type="file" /><input id="sendBtn" type="button" value="envoyer" /></div>
+    
+</body>
+
+</html>

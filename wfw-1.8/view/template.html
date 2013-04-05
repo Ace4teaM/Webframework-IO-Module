@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- Main template -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:template="http://www.webframework.fr/last/xmlns/template" xml:lang="fr" lang="fr" dir="ltr">
+<head template:action="merge" template:path=">head">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-language" content="fr" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8" /><!-- Internet explorer CSS compatible -->
+    <meta http-equiv="content-script-type" content="text/javascript" /><!-- Default script langage -->
+
+    <!-- Author -->
+    <meta name="Author" lang="fr" content="Thomas AUGUEY" />
+    <meta name="Publisher" lang="fr" content="Thomas AUGUEY" />
+    <meta name="Copyright" content="(C)2012-2013 Thomas AUGUEY" />
+
+    <!-- FavIcon -->
+    <link rel="icon" type="image/png" href="-{image:icon}" />
+    <link rel="shortcut icon" type="image/x-icon" href="-{icon:favicon}" />
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="-{_LIB_PATH_WFW_}/css/wfw-extends.css" type="text/css" />
+    <link rel="stylesheet" href="-{_LIB_PATH_WFW_}/css/wfw-fieldbar.css" type="text/css" />
+
+    <!-- Main Includes -->
+    <script type="text/javascript" language="javascript" src="-{_LIB_PATH_WFW_}/javascript/base.js"></script>
+    <script type="text/javascript" language="javascript" src="-{_LIB_PATH_YUI_}/yui/yui-min.js"></script>
+    <script type="text/javascript" language="javascript" src="-{_LIB_PATH_WFW_}/javascript/yui/yui_config.js"></script>
+    <script type="text/javascript">var wfw_yui_base_path = "-{_LIB_PATH_WFW_}/javascript/yui/";</script>
+
+    <!-- ExtJS -->
+    <script template:action="exists" template:name="_LIB_PATH_EXT_" type="text/javascript" language="javascript" src="-{_LIB_PATH_EXT_}/ext-all.js"></script>
+    <link template:action="exists" template:name="_LIB_PATH_EXT_" rel="stylesheet" type="text/css" href="-{_LIB_PATH_EXT_}/resources/css/ext-all.css" />
+    <script template:action="exists" template:name="_LIB_PATH_EXT_" type="text/javascript" language="javascript" src="-{_LIB_PATH_WFW_}/javascript/extjs/app.js"></script>
+    <script template:action="exists" template:name="_LIB_PATH_EXT_" type="text/javascript" language="javascript" src="-{_LIB_PATH_WFW_}/javascript/extjs/result.js"></script>
+    <script template:action="exists" template:name="_LIB_PATH_EXT_" type="text/javascript" language="javascript" src="-{_LIB_PATH_WFW_}/javascript/extjs/app.DataModel.js"></script>
+    <script template:action="exists" template:name="_LIB_PATH_EXT_" type="text/javascript" language="javascript" src="js/app.js"></script>
+
+    <!-- Result-box -->
+    <link rel="stylesheet" href="-{_LIB_PATH_WFW_}/css/result_box/style.css" type="text/css" />
+    <script type="text/javascript" language="javascript" src="-{_LIB_PATH_WFW_}/css/result_box/api.extjs.js"></script>
+
+    <!-- Add-Includes
+    <script type="text/javascript" language="javascript" src="js/user/user.js"></script>
+    <script type="text/javascript" language="javascript" src="js/globals.js"></script>
+    <script type="text/javascript" language="javascript" src="js/template.js"></script> -->
+
+    <style type="text/css">
+        #headerContent{
+            padding:10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #statusContent{
+            padding:20px;
+        }
+        #statusContent li strong{
+            width:150px;
+            display: inline-block;
+        }
+        #footerContent{
+            padding:10px;
+            font-style: italic;
+        }
+        #contentContent h1 {
+            margin-top:0px;
+            margin-bottom:4px;
+            font-size: 1.5em;
+        }
+        #contentContent h2 {
+            margin-top:8px;
+            margin-bottom:4px;
+            font-size: 1.1em;
+        }
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<!-- Document -->
+<body>
+    <div id="header">
+        <div id="headerContent">
+            <img src="-{_LIB_PATH_WFW_}/bin/logo.png" height="40" />
+            <hr/>
+            <span><a href="-{page:index}">Module Mailling</a></span>
+        </div>
+    </div>
+    <div id="status">
+        <div id="statusContent">
+            <ul>
+                <li><strong>Base de données</strong> : -{bdd_status}</li>
+            </ul>
+            
+        </div>
+    </div>
+    <div id="result" class="result">
+        <div class="-{result}">
+            <span class="ICON"></span>
+            <span class="TEXT"><span class="err">-{txt_error}</span><span class="msg">-{txt_message}</span></span>
+            
+        </div>
+    </div>
+    <div id="menu">
+        <!-- Administrateur -->
+        <ul id="menu1" template:action="select" template:path=":default.xml:index">
+            <li template:action="all" template:selector="> page[role=administrator]"><a href="-{{page:-{@id}}}">-{@name}</a></li>
+        </ul>
+        <!-- Visiteur -->
+        <ul id="menu2" template:action="select" template:path=":default.xml:index">
+            <li template:action="all" template:selector="> page[role=visitor]"><a href="-{{page:-{@id}}}">-{@name}</a></li>
+        </ul>
+        <!-- Utilisateur -->
+        <ul id="menu3" template:action="select" template:path=":default.xml:index">
+            <li template:action="all" template:selector="> page[role=user]"><a href="-{{page:-{@id}}}">-{@name}</a></li>
+        </ul>
+    </div>
+    <div id="content" template:action="merge" template:path=">body"></div>
+    <div id="footer" class="wfw_information"><div id="footerContent">Exemple d'implémentation du module Mailling dans un environnement Webframework</div></div>
+</body>
+
+
+</html>
