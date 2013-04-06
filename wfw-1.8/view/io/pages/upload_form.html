@@ -6,11 +6,22 @@
 <head>
     <script type="text/javascript" src="lib/io/IO.js"></script>
     <script type="text/javascript">
-        YUI.add('wfw-io', function (Y) {
-            var wfw = Y.namespace('wfw');
-            alert("hello");
-        }, '1.0', {
-            requires:['wfw-io']
+        YUI(wfw_yui_config(wfw_yui_base_path)).use('wfw-io','node', function (Y)
+        {
+            var wfw = Y.namespace("wfw");
+
+            //connection status change
+            var onLoad = function(e)
+            {
+                Y.Node.one("#sendBtn").on("click",function(){
+                    var fileEl = Y.Node.one("#file");
+                    wfw.IO.sendFileFromElement(fileEl.getDOMNode(),{
+                        callback:function(args,status){}
+                    });
+                });
+            }
+            //initialise les evenements
+            Y.one('window').on('load', onLoad);
         });
     </script>
 </head>

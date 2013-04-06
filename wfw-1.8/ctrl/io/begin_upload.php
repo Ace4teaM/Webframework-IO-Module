@@ -1,7 +1,7 @@
 <?php
 /*
     ---------------------------------------------------------------------------------------------------------------------------------------
-    (C)2012-2013 Thomas AUGUEY <contact@aceteam.org>
+    (C)2010-2011,2013 Thomas AUGUEY <contact@aceteam.org>
     ---------------------------------------------------------------------------------------------------------------------------------------
     This file is part of WebFrameWork.
 
@@ -56,13 +56,12 @@ class Ctrl extends cApplicationCtrl{
             $output_dir,
             ($mode=="file") ? ($upload_dir) : NULL,
             $_SERVER["REMOTE_ADDR"]
-        ))
-            return false;
+        )) return false;
         $result = cResult::getLast();
         //if(!IoUploadMgr::getById($uploadInst,cResult::getLast()->getAtt("IO_UPLOAD_ID")))
         //    return false;
 
-        // 4. Perpare l'espace de stockage
+        // 4. Prepare l'espace de stockage
         $io_upload_id = $result->getAtt("IO_UPLOAD_ID");
         $packet_size  = intval($result->getAtt("PACKET_SIZE")); //$app->getCfgValue("io_module","packet_size");
         $packet_count = intval($result->getAtt("PACKET_COUNT")); // intval(ceil($p->file_size / $packet_size));

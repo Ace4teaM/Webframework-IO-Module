@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8 (WFW)                            */
-/* Date de création :  05/04/2013 16:07:03                      */
+/* Date de création :  06/04/2013 12:52:59                      */
 /*==============================================================*/
 
 
@@ -14,9 +14,9 @@ drop table if exists IO_UPLOAD  CASCADE;
 create table IO_PACKET (
    IO_PACKET_ID         INT4                 not null,
    IO_UPLOAD_ID         VARCHAR(8)           not null,
-   PACKET_DATA          CHAR(524288)         not null,
+   BASE64_DATA          TEXT                 null,
    PACKET_STATUS        BOOL                 not null,
-   PACKET_COUNT         INT4                 not null,
+   PACKET_NUM           INT4                 not null,
    constraint PK_IO_PACKET primary key (IO_PACKET_ID)
 );
 

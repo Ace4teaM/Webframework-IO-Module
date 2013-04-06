@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{CEACC231-D7F6-4AC4-9AD6-472A2B65EBC4}" Label="" LastModificationDate="1365170811" Name="io" Objects="44" Symbols="5" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" signature="CDM_DATA_MODEL_XML" version="15.1.0.2850"?>
+<?PowerDesigner AppLocale="UTF16" ID="{CEACC231-D7F6-4AC4-9AD6-472A2B65EBC4}" Label="" LastModificationDate="1365245557" Name="io" Objects="44" Symbols="5" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" signature="CDM_DATA_MODEL_XML" version="15.1.0.2850"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -12,7 +12,7 @@
 <a:Code>IO</a:Code>
 <a:CreationDate>1365153737</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365167998</a:ModificationDate>
+<a:ModificationDate>1365245557</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <a:PackageOptionsText>[FolderOptions]
 
@@ -1193,8 +1193,8 @@ CARD 0 Arial,8,N</a:FontList>
 <o:AssociationLinkSymbol Id="o9">
 <a:CreationDate>1365164255</a:CreationDate>
 <a:ModificationDate>1365164268</a:ModificationDate>
-<a:Rect>((4913,7973), (20146,9247))</a:Rect>
-<a:ListOfPoints>((20146,9147),(4913,9147))</a:ListOfPoints>
+<a:Rect>((4913,7973), (20684,9247))</a:Rect>
+<a:ListOfPoints>((20684,9147),(4913,9147))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>0</a:ArrowStyle>
 <a:LineColor>16744576</a:LineColor>
@@ -1238,7 +1238,7 @@ Identifiers 0 Arial,8,N</a:FontList>
 <a:CreationDate>1365154254</a:CreationDate>
 <a:ModificationDate>1365164343</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((14901,6828), (31223,13570))</a:Rect>
+<a:Rect>((16407,6828), (29717,13570))</a:Rect>
 <a:LineColor>11184640</a:LineColor>
 <a:FillColor>16777136</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -1286,7 +1286,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>IO_UPLOAD</a:Code>
 <a:CreationDate>1365153741</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365170811</a:ModificationDate>
+<a:ModificationDate>1365245557</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <c:Identifiers>
 <o:Identifier Id="o15">
@@ -1415,10 +1415,10 @@ LABL 0 Arial,8,N</a:FontList>
 </c:DataItem>
 </o:EntityAttribute>
 <o:EntityAttribute Id="o36">
-<a:ObjectID>D10F37E1-62A9-4138-A5F7-F867F499E931</a:ObjectID>
-<a:CreationDate>1365167715</a:CreationDate>
+<a:ObjectID>CBDDA3BE-8C7E-4503-84CD-132D78A3D28E</a:ObjectID>
+<a:CreationDate>1365245543</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365167998</a:ModificationDate>
+<a:ModificationDate>1365245557</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <a:BaseAttribute.Mandatory>1</a:BaseAttribute.Mandatory>
 <c:DataItem>
@@ -1468,9 +1468,8 @@ LABL 0 Arial,8,N</a:FontList>
 <a:ObjectID>531BA3EC-4229-4D56-A3DF-87BBF2D23BE2</a:ObjectID>
 <a:CreationDate>1365154255</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365164251</a:ModificationDate>
+<a:ModificationDate>1365243478</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:BaseAttribute.Mandatory>1</a:BaseAttribute.Mandatory>
 <c:DataItem>
 <o:DataItem Ref="o42"/>
 </c:DataItem>
@@ -1494,7 +1493,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Modifier>developpement</a:Modifier>
 <a:BaseAttribute.Mandatory>1</a:BaseAttribute.Mandatory>
 <c:DataItem>
-<o:DataItem Ref="o37"/>
+<o:DataItem Ref="o46"/>
 </c:DataItem>
 </o:EntityAttribute>
 </c:Attributes>
@@ -1597,7 +1596,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Modifier>developpement</a:Modifier>
 <a:DataType>I</a:DataType>
 </o:DataItem>
-<o:DataItem Id="o46">
+<o:DataItem Id="o47">
 <a:ObjectID>AD36551D-9BBB-46A6-914D-50C356EAE305</a:ObjectID>
 <a:Name>io_packet_size</a:Name>
 <a:Code>IO_PACKET_SIZE</a:Code>
@@ -1609,14 +1608,13 @@ LABL 0 Arial,8,N</a:FontList>
 </o:DataItem>
 <o:DataItem Id="o42">
 <a:ObjectID>58F3B760-892F-4F6B-AFB6-28829ACC64B5</a:ObjectID>
-<a:Name>packet_data</a:Name>
-<a:Code>PACKET_DATA</a:Code>
+<a:Name>base64_data</a:Name>
+<a:Code>BASE64_DATA</a:Code>
 <a:CreationDate>1365154255</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365168312</a:ModificationDate>
+<a:ModificationDate>1365243478</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:DataType>BIN524288</a:DataType>
-<a:Length>524288</a:Length>
+<a:DataType>TXT</a:DataType>
 </o:DataItem>
 <o:DataItem Id="o33">
 <a:ObjectID>45B6911F-CDBC-4A51-B9A5-852659176D73</a:ObjectID>
@@ -1638,17 +1636,17 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Modifier>developpement</a:Modifier>
 <a:DataType>BL</a:DataType>
 </o:DataItem>
-<o:DataItem Id="o37">
+<o:DataItem Id="o46">
 <a:ObjectID>5E10EE79-2F9F-4701-9E9F-F9DDF89F7891</a:ObjectID>
-<a:Name>packet_count</a:Name>
-<a:Code>PACKET_COUNT</a:Code>
+<a:Name>packet_num</a:Name>
+<a:Code>PACKET_NUM</a:Code>
 <a:CreationDate>1365164153</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365167998</a:ModificationDate>
+<a:ModificationDate>1365245557</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <a:DataType>I</a:DataType>
 </o:DataItem>
-<o:DataItem Id="o47">
+<o:DataItem Id="o48">
 <a:ObjectID>5960EAD7-30C7-416D-A490-6C1F646DF67A</a:ObjectID>
 <a:Name>upload_token</a:Name>
 <a:Code>UPLOAD_TOKEN</a:Code>
@@ -1668,6 +1666,16 @@ LABL 0 Arial,8,N</a:FontList>
 <a:ModificationDate>1365167998</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <a:DataType>BL</a:DataType>
+</o:DataItem>
+<o:DataItem Id="o37">
+<a:ObjectID>F466D3E3-7559-4F3A-B7A4-27A6A474EE14</a:ObjectID>
+<a:Name>packet_count</a:Name>
+<a:Code>PACKET_COUNT</a:Code>
+<a:CreationDate>1365245543</a:CreationDate>
+<a:Creator>developpement</a:Creator>
+<a:ModificationDate>1365245557</a:ModificationDate>
+<a:Modifier>developpement</a:Modifier>
+<a:DataType>I</a:DataType>
 </o:DataItem>
 </c:DataItems>
 <c:Associations>
@@ -1712,7 +1720,7 @@ LABL 0 Arial,8,N</a:FontList>
 </o:AssociationLink>
 </c:AssociationsLinks>
 <c:TargetModels>
-<o:TargetModel Id="o48">
+<o:TargetModel Id="o49">
 <a:ObjectID>A62A3D41-FEFC-4E1D-81DD-58CA60B2967A</a:ObjectID>
 <a:Name>io</a:Name>
 <a:Code>IO</a:Code>

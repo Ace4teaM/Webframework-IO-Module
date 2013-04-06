@@ -48,7 +48,7 @@ class Ctrl extends cApplicationCtrl{
         $result->addAtt("last_packet_num",$upload->packetCount-1);*/
         for($i=0; $i<$upload->packetCount; $i++)
         {
-            $query = "select count(*) as cnt from io_packet where io_upload_id='$p->io_upload_id' and packet_count=$i and packet_status=TRUE;";
+            $query = "select count(*) as cnt from io_packet where io_upload_id='$p->io_upload_id' and packet_num=$i and packet_status=TRUE;";
             if(!$app->queryToObject($query,$resp))
                 return false;
             if($resp->cnt == "0"){

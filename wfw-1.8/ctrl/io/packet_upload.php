@@ -1,7 +1,7 @@
 <?php
 /*
     ---------------------------------------------------------------------------------------------------------------------------------------
-    (C)2012-2013 Thomas AUGUEY <contact@aceteam.org>
+    (C)2010-2011,2013 Thomas AUGUEY <contact@aceteam.org>
     ---------------------------------------------------------------------------------------------------------------------------------------
     This file is part of WebFrameWork.
 
@@ -27,49 +27,80 @@
  */
 
 class Ctrl extends cApplicationCtrl{
-    public $fields    = array('to', 'subject', 'msg');
-    public $op_fields = array( 'from', 'from_name', 'server_adr', 'port_num', 'notify', 'content_type' );
+    public $fields    = array('io_upload_id', 'packet_num', 'packet_size', 'base64_data');
+    public $op_fields = null;
 
-    function main(iApplication $app, $app_path, $p) {
-
-        //champs par défauts
-        if(!$p->from)
-            $p->from = $app->getCfgValue("mail_module","from");
-
-        if(!$p->from_name)
-            $p->from_name = $app->getCfgValue("mail_module","from_name");
-
-        if(!$p->server_adr)
-            $p->server_adr = $app->getCfgValue("mail_module","server_adr");
-
-        if(!$p->port_num)
-            $p->port_num = $app->getCfgValue("mail_module","port_num");
-
-        if(!$p->content_type)
-            $p->content_type = "text/plain";
-
-        if(!$p->notify)
-            $p->notify = NULL;
-
-        //initialise l'objet MailMessage
-        $msg = new MailMessage();
-        $msg->to       = $p->to;
-        $msg->subject  = $p->subject;
-        $msg->msg      = $p->msg;
-        $msg->from     = $p->from;
-        $msg->fromName = $p->from_name;
-        $msg->notify   = $p->notify;
-        $msg->contentType   = $p->content_type;
-
-        //initialise l'objet MailServer
-        $server = new MailServer();
-        $server->serverAdr = $p->server_adr;
-        $server->portNum   = $p->port_num;
-
-        //envoie le message
-        if(!MailModule::sendMessage($msg,$server))
+    function main(iApplication $app, $app_path, $p)
+    {
+        $mode = $app->getCfgValue("io_module","storage_mode");
+        
+        if(!IoUploadMgr::getById($upload, $p->io_upload_id))
             return false;
         
+        //verifie le numero du paquet
+        if($p->packet_num < 0 || $p->packet_num >= $upload->packetCount)
+            return RESULT(cResult::Failed,"IO_PACKET_NUM_OVERFLOW");
+        
+         //offset du packet
+        $packet_offset = $upload->packetSize * $p->packet_num;
+        
+        //taille du packet
+        if($p->packet_num == $upload->packetCount-1)//dernier paquet ?
+            $packet_size   = $upload->fileSize-(($upload->packetCount-1)*$upload->packetSize);
+        else
+            $packet_size   = $upload->packetSize; //taille du packet
+        if($packet_size != $p->packet_size)
+            return RESULT(cResult::Failed,"IO_PACKET_SIZE_DIFFER");
+
+        //décode les données
+        $data = base64_decode($p->base64_data);
+
+        //verifie la taille des données
+        if(strlen($data) != $packet_size)
+            return RESULT(cResult::Failed,"IO_INVALID_DATA_SIZE",array("message"=>(strlen($data)." != $packet_size")));
+        
+        // Ecrit les données a la volé dans le fichier
+        if($mode == "file")
+        {
+            $upload_file_name  = $upload->uploadPath."/".$p->io_upload_id;
+            
+            // ouvre le fichier en ecriture
+            if(!($fp = fopen($upload_file_name, "c")))
+                return RESULT(cResult::Failed, "IO_FILE_OPEN");
+
+            // verifie les limites
+            $fstat = fstat($fp);
+            $fp_size = intval($fstat['size']);
+            //print_r($fstat); exit;
+            if($packet_offset+$packet_size > $fp_size)
+            {
+                fclose($fp);
+                return RESULT(cResult::Failed, "IO_FILE_OVERFLOW");
+            }
+            
+            // deplace a l'offset
+            if(fseek($fp,$packet_offset,SEEK_SET)!=0)
+            {
+                fclose($fp);
+                return RESULT(cResult::Failed, "IO_FILE_SEEK_ERROR");
+            }
+            // ecrit les données
+            if(!fwrite($fp, $data))
+            {
+                fclose($fp);
+                return RESULT(cResult::Failed, "IO_FILE_WRITE_ERROR");
+            }
+            fclose($fp);
+        }
+
+        //envoi les données en base
+        if(!$app->callStoredProc('io_set_packet',
+            $p->io_upload_id,
+            $p->packet_num,
+            true,
+            $p->base64_data
+        )) return false;
+
         return RESULT_OK();
     }
 };

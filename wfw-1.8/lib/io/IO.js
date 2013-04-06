@@ -20,7 +20,7 @@
 */
 
 /**
- * Gestionnaire d'utilisateur
+ * Gestionnaire d'entrées-sorties
  * Librairie Javascript
  *
  * WFW Dependences: base.js
@@ -33,6 +33,34 @@ YUI.add('wfw-io', function (Y) {
     wfw.IO = {
         use: true,
         list: {},
+        
+        /**
+         * @brief Envoie un ou plusieurs fichiers
+         * @param DOMNode fileObj Un élément INPUT de type FILE
+         * @return bool Résultat de procédure
+         */
+        sendFileFromElement: function(fileObj,att)
+        {
+            // upload simple (I.E)
+            if (typeof (fileObj.files) == "undefined") {
+                if (empty(fileObj.value)) {
+                    wfw.puts("sendFileEl (form): Veuillez choisir un fichier à envoyer");
+//                    return wfw.Result.set(wfw.Result.Failed, "APP_NO_INPUT_FILE");
+                    return false;
+                }
+                wfw.IO.sendAsForm("file_form", null, att);
+            }
+            // upload par paquet
+            else {
+                if (!fileObj.files.length) {
+                    wfw.puts("sendFileEl (pck): Veuillez choisir un fichier à envoyer");
+//                    return wfw.Result.set(wfw.Result.Failed, "APP_NO_INPUT_FILE");
+                    return false;
+                }
+                wfw.IO.sendAsPacket(fileObj.files[0], att);
+            }
+            return true;
+        },
         /*
             Remarques:
                 data    = input[File]
@@ -40,6 +68,7 @@ YUI.add('wfw-io', function (Y) {
                 wfw_pwd = text
         */
         sendAsForm: function (formid, client_id, att) {
+            wfw.puts("wfw.IO.sendAsForm");
             // options 
             var opt = {
                 callback:null,
@@ -146,6 +175,7 @@ YUI.add('wfw-io', function (Y) {
             [bool] true en cas de succès, false en cas d'erreur
         */
         sendAsPacket: function (file, att) {
+            wfw.puts("wfw.IO.sendAsPacket");
         
             // options 
             var opt = {
@@ -155,108 +185,145 @@ YUI.add('wfw-io', function (Y) {
             };
             if(typeof(att)!="undefined")
                 opt=object_merge(opt,att);
+            
+            // reponse de la requete 'begin_upload'
+            var infos = null;
+            
+            // demande la création d'un processus d'upload
+            wfw.Request.Add(
+                null,
+                wfw.Navigator.getURI("begin_upload"),
+                {
+                    file_size: file.size, 
+                    filename: file.name,
+                    output: 'xarg'
+                },
+                wfw.XArg.onCheckRequestResult, 
+                {
+                    onsuccess: function (obj, args) {
+                        infos = copy(args);
 
-            /* demande la creation d'un processus d'upload */
-            var param = {
-                "onsuccess": function (obj, args) {
-                    
-                    //compte le nombre de part et la taille restante
-                    var packet_count= parseInt(obj.args.packet_count);
-                    var packet_size = parseInt(obj.args.packet_size);
-                    var file_size   = parseInt(obj.args.file_size);
-                    var rest        = file_size - (packet_count * packet_size);
-
-                    //prepare la liste des paquets à envoyer
-                    wfw.IO.list[args.token] = {
-                        part_remaining: (count),
-                        part_count: (count)
-                    };
-                    
-                    //callback 'begin'
-                    opt.callback(args,"begin",wfw.ext.upload.list[args.token]);
-                    
-                    // ecrit les fragments de fichier
-                    wfw.puts("-- Begin Upload ( token=" + args.io_upload_id + ", " + file_size + " bytes, " + packet_count + " parts, " + packet_size + " bytes/parts ) --");
-                    var i = 0;
-                    var start = 0;
-                    while (i < packet_count) {
-                        var reader = new FileReader();
-                        var size = ((i + 1 < packet_count) ? packet_size : rest);
-
-                        //
-                        wfw.IO.readFileOffset_base64(
-                            file,
-                            start,
-                            size,
-                            //onLoad
-                            function (start, size, data, param) {
-                                //upload le fragment de données
-                                //wfw.puts("wfw.ext.upload.sendAsPacket: ["+start+":"+size+"]\n");
-                                wfw.Request.Add(null, "req/client/packetUpload.php",
-                                {
-                                    wfw_id: (param.wfw_id),
-                                    token: (param.token),
-                                    filename: (param.filename),//passe pour "finalizeUpload.php"
-                                    offset: (start),
-                                    size: (size),
-                                    wfw_form_name: opt.form_id,//formulaire qui va traiter les erreurs
-                                    encoded: "base64",
-                                    /*"count": (param.index),*/
-                                    data: $new( wfw.HTTP_REQUEST_PART, {
-                                        headers: [
-                                        'Content-Disposition: form-data; name="data"',
-                                        'Content-Type: application/octet-stream',
-                                        'Content-Length: ' + size
-                                        ],
-                                        data: (data)
-                                    })
-                                /*data: {
-                                        headers: [
-                                            'Content-Disposition: form-data; name="data"',
-                                            'Content-Type: application/octet-stream',
-                                            'Content-Length: ' + size
-                                        ],
-                                        data: (data)
-                                    }*/
-                                },
-                                wfw.utils.onCheckRequestResult_XARG,
-                                //resultat
-                                object_merge(wfw.ext.upload.onUploadResult,{
-                                    options:(opt)
-                                }),
-                                true//async
-                                );
-                            },
-                            //param
-                            {
-                                wfw_id: (args.id),
-                                token: (args.token),
-                                index: (i),
-                                filename: (obj.args.filename)//passe pour "finalizeUpload.php"
-                            }
-                            );
-
-                        start += size;
-                        i++;
+                        //callback
+                        opt.callback(args,"begin");
+                        wfw.puts("wfw.IO.sendAsPacket: BEGIN (io_upload_id="+args.io_upload_id+", "+file.size+" bytes)");
+                    },
+                    onfailed: function (obj, args) {
+                        //callback
+                        opt.callback(args,"failed");
+                        wfw.puts("wfw.IO.sendAsPacket: FAILED");
+                    },
+                    onerror: function (obj) {
+                        //callback
+                        opt.callback(null,"error");
+                        wfw.puts("wfw.IO.sendAsPacket: ERROR");
                     }
                 },
-                onfailed: function (obj, args) {
-                    //callback ?
-                    opt.callback(args,"failed");
-                    wfw.puts("wfw.ext.upload.sendAsPacket: FAILED\n");
+                false
+            );
+            
+            if(infos==null)
+                return false;
+
+            // prepare la requete d'envoi
+            var packetReq = {
+                name:null,
+                url:wfw.Navigator.getURI("packet_upload"),
+                args:{
+                    io_upload_id: infos.io_upload_id, 
+                    packet_num: null,//a redefinir
+                    packet_data: null,//a redefinir
+                    output: 'xarg'
                 },
-                onerror: function (obj) {
-                    //callback ?
-                    opt.callback(args,"error");
-                    wfw.puts("wfw.ext.upload.sendAsPacket: ERROR\n");
-                }
+                callback:wfw.XArg.onCheckRequestResult, 
+                user:{
+                    onsuccess: function (obj, args) {
+                        opt.callback(args,"update");
+                        wfw.puts("wfw.IO.sendAsPacket: Packet n°"+obj.args.packet_num+" envoyé");
+                        //continue l'upload avec le prochain paquet
+                        wfw.Request.Insert(new wfw.Request.REQUEST(copy(checkReq)));
+                    },
+                    onfailed: function (obj, args) {
+                        //une erreur est survenue
+                        opt.callback(args,"failed");
+                        wfw.puts("wfw.IO.sendAsPacket: FAILED");
+                    },
+                    onerror: function (obj) {
+                        //callback
+                        opt.callback(null,"error");
+                        wfw.puts("wfw.IO.sendAsPacket: ERROR");
+                    }
+                },
+                async:true
             };
             
-            wfw.request.Add(null, wfw.Navigator.getURI("begin_upload"), {
-                file_size: file.size, 
-                filename: file.name
-            }, wfw.XArg.onCheckRequestResult, param, false);
-
+            // prepare la requete de verification
+            var checkReq = {
+                name:null,
+                url:wfw.Navigator.getURI("check_upload"),
+                args:{
+                    io_upload_id: infos.io_upload_id, 
+                    filename: file.name,
+                    output: 'xarg'
+                },
+                callback:wfw.XArg.onCheckRequestResult, 
+                user:{
+                    onsuccess: function (obj, args) {
+                        opt.callback(args,"end");
+                        wfw.puts("wfw.IO.sendAsPacket: END\n");
+                    },
+                    onfailed: function (obj, args) {
+                        //l'upload n'est pas terminé, on continue
+                        if(args.error == "IO_FILE_UNCOMPLETED")
+                        {
+                            wfw.puts("Continue upload with packet "+args.packet_num);
+                            //lit le contenu du fichier
+                            wfw.IO.readFileOffset_base64(
+                                file,
+                                args.packet_offset,
+                                args.packet_size,
+                                //onLoad
+                                function (start, size, data, param) {
+                                    wfw.puts("Send packet #"+args.packet_num+" : [" + args.packet_offset + ":" + args.packet_size + "]\n");
+                                    var req = object_merge(packetReq,{
+                                        args:{
+                                            output:"xarg",
+                                            io_upload_id: infos.io_upload_id,
+                                            packet_num: args.packet_num,
+                                            packet_size: args.packet_size,
+                                            base64_data: new wfw.HTTP.HTTP_REQUEST_PART({
+                                                headers: [
+                                                    'Content-Disposition: form-data; name="base64_data"',
+                                                    'Content-Type: application/octet-stream',
+                                                    'Content-Length: ' + size
+                                                ],
+                                                data: (data)
+                                            })
+                                        }
+                                    },true);
+                                    
+                                    wfw.Request.Insert(new wfw.Request.REQUEST(req));
+                                }
+                            );
+                        }
+                        //une erreur est survenue
+                        else{
+                            //callback
+                            opt.callback(args,"failed");
+                            wfw.puts("wfw.IO.sendAsPacket: FAILED\n");
+                        }
+                    },
+                    onerror: function (obj) {
+                        //callback
+                        opt.callback(null,"error");
+                        wfw.puts("wfw.IO.sendAsPacket: ERROR\n");
+                    }
+                },
+                async:false
+            };
+            
+            //debut l'upload par une premiere verification
+            wfw.Request.Insert(new wfw.Request.REQUEST(copy(checkReq)));
+            
             return true;
         },
     
@@ -373,6 +440,7 @@ YUI.add('wfw-io', function (Y) {
                 [bool] true en cas de succès, false en cas d'erreur
         */
         readFileOffset_base64: function (file, start, size, callback, param) {
+            wfw.puts("wfw.IO.readFileOffset_base64...");
             var reader = new FileReader();
 
             //tout le fichier ?
@@ -395,7 +463,7 @@ YUI.add('wfw-io', function (Y) {
             else if (file.slice)
                 blob = file.slice(start, size);
             else {
-                wfw.puts("wfw.ext.upload.readFile: Slice file is not disponible on your navigator !");
+                wfw.puts("wfw.IO.readFileOffset_base64: Slice file is not disponible on your navigator !");
                 return false;
             }
 
@@ -487,5 +555,5 @@ YUI.add('wfw-io', function (Y) {
         }
     }
 }, '1.0', {
-    requires:['base', 'cookie', 'wfw','wfw-request','wfw-xml','wfw-uri','wfw-navigator','wfw-style','wfw-xarg']
+    requires:['base', 'cookie', 'wfw','wfw-request','wfw-xml','wfw-uri','wfw-navigator','wfw-http','wfw-xarg']
 });

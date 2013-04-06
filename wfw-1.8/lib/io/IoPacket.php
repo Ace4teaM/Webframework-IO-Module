@@ -40,7 +40,7 @@ class IoPacket
     /**
     * @var      String
     */
-    public $packetData;
+    public $base64Data;
     
     /**
     * @var      boolean
@@ -50,7 +50,7 @@ class IoPacket
     /**
     * @var      int
     */
-    public $packetCount;    
+    public $packetNum;    
 
 }
 
@@ -71,9 +71,9 @@ class IoPacketMgr
         $node = $doc->createElement(strtolower("IoPacket"));
         
         $node->appendChild($doc->createTextElement("io_packet_id",$inst->ioPacketId));
-        $node->appendChild($doc->createTextElement("packet_data",$inst->packetData));
+        $node->appendChild($doc->createTextElement("base64_data",$inst->base64Data));
         $node->appendChild($doc->createTextElement("packet_status",$inst->packetStatus));
-        $node->appendChild($doc->createTextElement("packet_count",$inst->packetCount));       
+        $node->appendChild($doc->createTextElement("packet_num",$inst->packetNum));       
 
           
         return $node;
@@ -119,9 +119,9 @@ class IoPacketMgr
     */
     public static function bindResult(&$inst,$result){
           $inst->ioPacketId = $result->fetchValue("io_packet_id");
-          $inst->packetData = $result->fetchValue("packet_data");
+          $inst->base64Data = $result->fetchValue("base64_data");
           $inst->packetStatus = $result->fetchValue("packet_status");
-          $inst->packetCount = $result->fetchValue("packet_count");          
+          $inst->packetNum = $result->fetchValue("packet_num");          
 
        return true;
     }
@@ -192,9 +192,9 @@ class IoPacketMgr
       //execute la requete
        $query = "UPDATE IO_packet SET";
        $query .= " io_packet_id =".$db->parseValue($inst->ioPacketId).",";
-       $query .= " packet_data =".$db->parseValue($inst->packetData).",";
+       $query .= " base64_data =".$db->parseValue($inst->base64Data).",";
        $query .= " packet_status =".$db->parseValue($inst->packetStatus).",";
-       $query .= " packet_count =".$db->parseValue($inst->packetCount).",";
+       $query .= " packet_num =".$db->parseValue($inst->packetNum).",";
        $query = substr($query,0,-1);//remove last ','
        $query .= " where IO_packet_id=".$db->parseValue($inst->ioPacketId);
        if($db->execute($query,$result))

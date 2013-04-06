@@ -1,7 +1,7 @@
 <?php
 /*
     ---------------------------------------------------------------------------------------------------------------------------------------
-    (C)2010-2011,2013 Thomas AUGUEY <contact@aceteam.org>
+    (C)2012-2013 Thomas AUGUEY <contact@aceteam.org>
     ---------------------------------------------------------------------------------------------------------------------------------------
     This file is part of WebFrameWork.
 
@@ -27,26 +27,24 @@
  */
 
 class Ctrl extends cApplicationCtrl{
-    public $fields    = array('token', 'filename');
+    public $fields    = null;
     public $op_fields = null;
 
     function main(iApplication $app, $app_path, $p)
     {
-        $upload_dir = $app->getCfgValue("io_module","upload_dir");
-
-        //
-        // Vérifie si le fichier d'upload existe
-        //
-        $upload_file_name  = $upload_dir."/".$token;
-        if(!file_exists($upload_file_name))
-            return RESULT(cResult::Failed, "IO_INVALID_UPLOAD_TOKEN");
-
-        //
-        // Renomme le fichier
-        //
-        rename($upload_file_name,$output_dir."/".$p->filename);
-
         return RESULT_OK();
+    }
+    
+    function output(iApplication $app, $format, $att, $result)
+    {
+        if(!$result->isOK())
+            return parent::output($app, $format, $att, $result);
+        
+        switch($format){
+            case "html":
+                return $app->MakeXMLView("view/io/pages/upload_form.html",array());
+        }
+        return parent::output($app, $format, $att, $result);
     }
 };
 

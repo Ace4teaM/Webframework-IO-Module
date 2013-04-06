@@ -69,3 +69,35 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+/*
+  Définit une paquet
+*/
+CREATE OR REPLACE FUNCTION io_set_packet(
+        p_io_upload_id io_upload.io_upload_id%type,
+        p_packet_num io_packet.packet_num%type,
+        p_packet_status io_packet.packet_status%type,
+        p_base64_data io_packet.base64_data%type
+)
+RETURNS RESULT AS
+$$
+DECLARE
+	v_io_packet_id io_packet.io_packet_id%type;
+	v_result RESULT;
+BEGIN
+    select io_packet_id into v_io_packet_id from io_packet where io_upload_id = p_io_upload_id and packet_num = p_packet_num;
+    if v_io_packet_id is not null then 
+        update io_packet set packet_status = p_packet_status and base64_data = p_base64_data
+            where io_packet_id = v_io_packet_id;
+    else
+        select coalesce(max(io_packet_id)+1,1) into v_io_packet_id from io_packet;
+        insert into io_packet
+            VALUES(v_io_packet_id,p_io_upload_id,p_base64_data,p_packet_status,p_packet_num);
+    end if;
+
+    /* ok */
+    select 'ERR_OK', 'IO_PACKET_SET', 'IO_PACKET_ID:'||v_io_packet_id||';' into v_result;
+    return v_result;
+END;
+$$
+LANGUAGE plpgsql;
