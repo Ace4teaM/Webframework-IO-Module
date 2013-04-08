@@ -94,14 +94,12 @@ class Ctrl extends cApplicationCtrl{
         }
 
         //envoi les données en base
-        if(!$app->callStoredProc('io_set_packet',
+        return $app->callStoredProc('io_set_packet',
             $p->io_upload_id,
             $p->packet_num,
             true,
             $p->base64_data
-        )) return false;
-
-        return true;
+        );
     }
 };
 
