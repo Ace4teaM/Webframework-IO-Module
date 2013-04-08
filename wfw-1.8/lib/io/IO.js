@@ -162,6 +162,13 @@ YUI.add('wfw-io', function (Y) {
                 },
                 param);
         },
+        UploadStatus:{
+          Begin:"begin",
+          Failed:"failed",
+          Error:"error",
+          Update:"update",
+          End:"end"
+        },
         /*
         Upload un fichier en paquets
         Paramètres:
