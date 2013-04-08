@@ -27,7 +27,7 @@
  */
 
 class Ctrl extends cApplicationCtrl{
-    public $fields    = array('file_size', 'filename');
+    public $fields    = array('file_size', 'filename', 'content_type');
     public $op_fields = null;
 
     function main(iApplication $app, $app_path, $p)
@@ -55,7 +55,8 @@ class Ctrl extends cApplicationCtrl{
             $p->filename,
             $output_dir,
             ($mode=="file") ? ($upload_dir) : NULL,
-            $_SERVER["REMOTE_ADDR"]
+            $_SERVER["REMOTE_ADDR"],
+            $p->content_type
         )) return false;
         $result = cResult::getLast();
         //if(!IoUploadMgr::getById($uploadInst,cResult::getLast()->getAtt("IO_UPLOAD_ID")))

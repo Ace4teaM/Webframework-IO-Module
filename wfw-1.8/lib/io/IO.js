@@ -201,7 +201,8 @@ YUI.add('wfw-io', function (Y) {
                 null,
                 wfw.Navigator.getURI("begin_upload"),
                 {
-                    file_size: file.size, 
+                    file_size: file.size,
+                    content_type: file.type, 
                     filename: file.name,
                     output: 'xarg'
                 },
