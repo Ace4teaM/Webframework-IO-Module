@@ -13,10 +13,21 @@
             //connection status change
             var onLoad = function(e)
             {
+                //standard
                 Y.Node.one("#sendBtn").on("click",function(){
                     var fileEl = Y.Node.one("#file");
                     wfw.IO.sendFileFromElement(fileEl.getDOMNode(),{
-                        callback:function(args,status){}
+                        callback:function(args,status){
+                            Y.Node.one("#status").set("text",status);
+                            switch(status){
+                                case wfw.IO.UploadStatus.Update:
+                                    Y.Node.one("#status").set("text",status + " ("+args.packet_num+")");
+                                    break;
+                                case wfw.IO.UploadStatus.End:
+                                    alert("upload complete");
+                                    break;
+                            }
+                        }
                     });
                 });
             }
@@ -24,13 +35,37 @@
             Y.one('window').on('load', onLoad);
         });
     </script>
+    
+    <script type="text/javascript" src="js/MyApp.IO.js"></script>
+    <script type="text/javascript">
+        MyApp.Loading.addCallback(
+            function(Y){
+                var wfw = Y.namespace("wfw");
+
+                //extjs
+                Y.Node.one("#extjsDialogBtn").on("click",function(){
+                    var fileEl = Y.Node.one("#file2");
+                    var dlg = Ext.create('MyApp.IO.UploadDialog',{
+                        fileEl   : fileEl.getDOMNode(),
+                        callback : function(args,status){}
+                    });
+                    dlg.show();
+                });
+            }
+       );
+    </script>
 </head>
 
 <!-- Document -->
 <body>
 
     <h1>Envoyer un fichier</h1>
-    <div>Fichier: <input id="file" name="file" type="file" /><input id="sendBtn" type="button" value="envoyer" /></div>
+    <h2>Méthode HTML</h2>
+    <div>Fichier: <input id="file" name="file" type="file" /><input id="sendBtn" type="button" value="Envoyer" /><br/>Statut: <span id="status"></span></div>
+    
+    <h2>Extjs/Dialog</h2>
+    <div>Fichier: <input id="file2" name="file2" type="file" /><input id="extjsDialogBtn" type="button" value="Envoyer" /></div>
+    
     
 </body>
 
