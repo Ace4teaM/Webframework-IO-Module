@@ -96,7 +96,7 @@ BEGIN
     end if;
 
     /* ok */
-    select 'ERR_OK', 'IO_PACKET_SET', 'IO_PACKET_ID:'||v_io_packet_id||';' into v_result;
+    select 'ERR_OK', 'IO_PACKET_SET', 'PACKET_NUM:'||p_packet_num||';IO_PACKET_ID:'||v_io_packet_id||';' into v_result;
     return v_result;
 END;
 $$
