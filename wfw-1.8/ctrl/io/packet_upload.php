@@ -101,7 +101,7 @@ class Ctrl extends cApplicationCtrl{
             $p->base64_data
         )) return false;
 
-        return RESULT_OK();
+        return true;
     }
 };
 
