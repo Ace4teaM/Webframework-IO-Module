@@ -14,7 +14,8 @@ CREATE OR REPLACE FUNCTION io_create_upload(
         p_filename io_upload.filename%type,
         p_output_path io_upload.output_path%type,
         p_upload_path io_upload.upload_path%type, -- si NULL, l'upload est réalisé en base
-        p_client_ip io_upload.client_ip%type
+        p_client_ip io_upload.client_ip%type,
+        p_content_type io_upload.content_type%type
 )
 RETURNS RESULT AS
 $$
@@ -49,7 +50,8 @@ BEGIN
             UPLOAD_PATH,
             CLIENT_IP,
             FILE_SIZE,
-            PACKET_COUNT
+            PACKET_COUNT,
+            CONTENT_TYPE
         )
         VALUES( 
             v_io_upload_id,
@@ -60,7 +62,8 @@ BEGIN
             p_upload_path,
             p_client_ip,
             p_file_size,
-            v_packet_count
+            v_packet_count,
+            p_content_type
         );
 
     /* ok */
@@ -95,9 +98,43 @@ BEGIN
             VALUES(v_io_packet_id,p_io_upload_id,p_base64_data,p_packet_status,p_packet_num);
     end if;
 
-    /* ok */
+    -- ok
     select 'ERR_OK', 'IO_PACKET_SET', 'PACKET_NUM:'||p_packet_num||';IO_PACKET_ID:'||v_io_packet_id||';' into v_result;
     return v_result;
 END;
 $$
 LANGUAGE plpgsql;
+
+/*
+  Définit une paquet
+
+CREATE OR REPLACE FUNCTION io_get_data(
+        p_io_upload_id io_upload.io_upload_id%type
+)
+RETURNS RESULT AS
+$$
+DECLARE
+        v_rec io_packet%rowtype;
+	tmp VARCHAR;
+	v_base64_data TEXT default NULL;
+	v_result RESULT;
+BEGIN
+    --select base64_data from io_packet where io_upload_id = p_io_upload_id order by packet_num;
+    FOR v_rec IN select * from io_packet where io_upload_id = p_io_upload_id order by packet_num LOOP
+	if v_base64_data is null then
+		v_base64_data='';
+	end if;
+        v_base64_data = v_base64_data||decode(v_rec.base64_data,'base64');
+    END LOOP;
+
+    if v_base64_data is null then
+	select 'ERR_FAILED', 'IO_NO_DATA_FOUND'  into v_result;
+	return v_result;
+    end if;
+
+    -- pas de données 
+    select 'ERR_OK', 'SUCCESS', 'BASE64_DATA:'||encode(v_base64_data,'base64')||';'  into v_result;
+    return v_result;
+END;
+$$
+LANGUAGE plpgsql;*/

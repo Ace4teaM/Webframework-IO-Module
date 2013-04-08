@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8 (WFW)                            */
-/* Date de création :  06/04/2013 12:52:59                      */
+/* Date de création :  08/04/2013 14:26:37                      */
 /*==============================================================*/
 
 
@@ -35,6 +35,7 @@ create table IO_UPLOAD (
    FILE_SIZE            INT4                 not null,
    UPLOAD_COMPLETE      BOOL                 not null,
    PACKET_COUNT         INT4                 not null,
+   CONTENT_TYPE         VARCHAR(260)         not null,
    constraint PK_IO_UPLOAD primary key (IO_UPLOAD_ID)
 );
 

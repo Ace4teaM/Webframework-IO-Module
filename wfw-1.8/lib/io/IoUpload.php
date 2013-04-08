@@ -85,7 +85,12 @@ class IoUpload
     /**
     * @var      int
     */
-    public $packetCount;    
+    public $packetCount;
+    
+    /**
+    * @var      String
+    */
+    public $contentType;    
 
 }
 
@@ -115,7 +120,8 @@ class IoUploadMgr
         $node->appendChild($doc->createTextElement("begin_date",$inst->beginDate));
         $node->appendChild($doc->createTextElement("file_size",$inst->fileSize));
         $node->appendChild($doc->createTextElement("upload_complete",$inst->uploadComplete));
-        $node->appendChild($doc->createTextElement("packet_count",$inst->packetCount));       
+        $node->appendChild($doc->createTextElement("packet_count",$inst->packetCount));
+        $node->appendChild($doc->createTextElement("content_type",$inst->contentType));       
 
           
         return $node;
@@ -170,7 +176,8 @@ class IoUploadMgr
           $inst->beginDate = $result->fetchValue("begin_date");
           $inst->fileSize = $result->fetchValue("file_size");
           $inst->uploadComplete = $result->fetchValue("upload_complete");
-          $inst->packetCount = $result->fetchValue("packet_count");          
+          $inst->packetCount = $result->fetchValue("packet_count");
+          $inst->contentType = $result->fetchValue("content_type");          
 
        return true;
     }
@@ -251,6 +258,7 @@ class IoUploadMgr
        $query .= " file_size =".$db->parseValue($inst->fileSize).",";
        $query .= " upload_complete =".$db->parseValue($inst->uploadComplete).",";
        $query .= " packet_count =".$db->parseValue($inst->packetCount).",";
+       $query .= " content_type =".$db->parseValue($inst->contentType).",";
        $query = substr($query,0,-1);//remove last ','
        $query .= " where IO_Upload_id=".$db->parseValue($inst->ioUploadId);
        if($db->execute($query,$result))
