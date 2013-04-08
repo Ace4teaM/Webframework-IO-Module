@@ -482,8 +482,8 @@ YUI.add('wfw-io', function (Y) {
             //Lit le fichier
             reader.param = param;
             reader.callback = callback;
-            reader.onabort = function (evt) {alert("onabort");}
-            reader.onerror = function (evt) {alert("onerror");}
+            reader.onabort = function (evt) {wfw.puts("readFileOffset_base64: Abort event !");}
+            reader.onerror = function (evt) {wfw.puts("readFileOffset_base64: Error event !");}
             reader.onloadend = function (evt) {
                 if (evt.target.readyState == FileReader.DONE) {
                     //supprime l'entete des données (base64 only)
