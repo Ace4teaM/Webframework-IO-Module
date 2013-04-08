@@ -65,7 +65,7 @@ class IoUpload
     /**
     * @var      String
     */
-    public $clientIp;
+    public $uploadClientIp;
     
     /**
     * @var      Date
@@ -116,7 +116,7 @@ class IoUploadMgr
         $node->appendChild($doc->createTextElement("filename",$inst->filename));
         $node->appendChild($doc->createTextElement("output_path",$inst->outputPath));
         $node->appendChild($doc->createTextElement("upload_path",$inst->uploadPath));
-        $node->appendChild($doc->createTextElement("client_ip",$inst->clientIp));
+        $node->appendChild($doc->createTextElement("upload_client_ip",$inst->uploadClientIp));
         $node->appendChild($doc->createTextElement("begin_date",$inst->beginDate));
         $node->appendChild($doc->createTextElement("file_size",$inst->fileSize));
         $node->appendChild($doc->createTextElement("upload_complete",$inst->uploadComplete));
@@ -172,7 +172,7 @@ class IoUploadMgr
           $inst->filename = $result->fetchValue("filename");
           $inst->outputPath = $result->fetchValue("output_path");
           $inst->uploadPath = $result->fetchValue("upload_path");
-          $inst->clientIp = $result->fetchValue("client_ip");
+          $inst->uploadClientIp = $result->fetchValue("upload_client_ip");
           $inst->beginDate = $result->fetchValue("begin_date");
           $inst->fileSize = $result->fetchValue("file_size");
           $inst->uploadComplete = $result->fetchValue("upload_complete");
@@ -253,7 +253,7 @@ class IoUploadMgr
        $query .= " filename =".$db->parseValue($inst->filename).",";
        $query .= " output_path =".$db->parseValue($inst->outputPath).",";
        $query .= " upload_path =".$db->parseValue($inst->uploadPath).",";
-       $query .= " client_ip =".$db->parseValue($inst->clientIp).",";
+       $query .= " upload_client_ip =".$db->parseValue($inst->uploadClientIp).",";
        $query .= " begin_date =".$db->parseValue($inst->beginDate).",";
        $query .= " file_size =".$db->parseValue($inst->fileSize).",";
        $query .= " upload_complete =".$db->parseValue($inst->uploadComplete).",";

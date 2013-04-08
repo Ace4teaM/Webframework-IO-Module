@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{C4DD48DF-DD98-4930-B594-127CC7BA6E3E}" Label="" LastModificationDate="1365244954" Name="io" Objects="26" Symbols="3" Target="PHP (WFW)" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
+<?PowerDesigner AppLocale="UTF16" ID="{C4DD48DF-DD98-4930-B594-127CC7BA6E3E}" Label="" LastModificationDate="1365423988" Name="io" Objects="27" Symbols="3" Target="PHP (WFW)" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -12,7 +12,7 @@
 <a:Code>IO</a:Code>
 <a:CreationDate>1365156698</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <a:History>ORG {EFC0A591-67C3-452B-9DBF-ACB1D9D558A7}
 DAT 1365156703
@@ -117,7 +117,28 @@ DLD {F3809EC4-A22F-488D-A3DB-CA5DE2FF3F02}
 DLD {C4441A13-6258-4CFF-B763-D82EB9AD21F3}
 DLD {E9F8EDE3-F25C-4B45-8C7C-5EC79D868BC2}
 DLD {6BFB1523-6A4B-4F0C-83A7-FA7F62FD8F11}
-DLD {BB95F226-CDFE-474A-BF7E-EA2401819486}</a:History>
+DLD {BB95F226-CDFE-474A-BF7E-EA2401819486}
+DLD {AA6AD40E-7396-40F8-B2B5-7C4312D58454}
+DLD {7B4FC6ED-7AD8-497A-BCB3-D82ED1DC87E8}
+DLD {646797F9-5CAD-4B1E-B7D5-CF79C0C87D31}
+DLD {26371D82-1057-46A9-A130-6D24CA523338}
+DLD {AFAB76D5-8896-484E-AC3E-D7650515A251}
+DLD {8BFE35AE-086F-41BC-B4E5-CB63C3FCCE30}
+DLD {E01F2420-ECDC-4C2E-A298-69E4DF978E0D}
+DLD {41BB5EEE-9078-4475-A6D1-660D5E2DCFF7}
+DLD {CD237220-E985-4622-B1D5-DF9F77BDE472}
+DLD {614F9596-8C8C-45CB-B36F-5794C02816DC}
+DLD {4793D63E-8007-48F2-948F-F0A486A38681}
+DLD {5F101CD3-953F-49B9-8C21-5AC4CDAA0BD2}
+DLD {30D1CE23-E861-4770-A45F-A7BF7FA0898D}
+DLD {92D48700-42A9-4971-8624-6B9CA141138C}
+DLD {3213773A-75D5-4EAB-8B25-9BBE16A9AF6A}
+DLD {527350EF-E7E1-4074-B887-C91BF0873678}
+DLD {09F46591-423D-45B9-9AA6-73E172087508}
+DLD {A733B782-A7D3-466C-9935-EAFB625AC00D}
+DLD {094C1331-6AE4-4403-B22A-46839F134939}
+DLD {3C0E5C42-DDAF-4F46-815F-ECD4002FA6BF}
+DLD {6B87A766-16E1-453B-96E0-F578CF326815}</a:History>
 <a:PackageOptionsText>[FolderOptions]
 
 [FolderOptions\Class Diagram Objects]
@@ -2147,9 +2168,9 @@ NameToCode=No</a:ModelOptionsText>
 <a:ObjectID>03B0D10A-7B54-42DB-BC21-5F5DCAD232E2</a:ObjectID>
 <a:Name>io</a:Name>
 <a:Code>IO</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
 <a:TargetStereotype/>
 <a:TargetID>EFC0A591-67C3-452B-9DBF-ACB1D9D558A7</a:TargetID>
@@ -2172,19 +2193,19 @@ NameToCode=No</a:ModelOptionsText>
 </c:ObjectLanguage>
 <c:ClassDiagrams>
 <o:ClassDiagram Id="o5">
-<a:ObjectID>38FB1DFE-24A4-474D-962A-04988DA8CFCE</a:ObjectID>
+<a:ObjectID>1416E495-8B09-4E39-9A42-FC919E5B6493</a:ObjectID>
 <a:Name>Diagramme_1</a:Name>
 <a:Code>DIAGRAMME_1</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {AA6AD40E-7396-40F8-B2B5-7C4312D58454}
-DAT 1365244954
-ORG {89B02FF8-410E-4180-B748-EF11102B84B2}
-DAT 1365244937
+<a:History>ORG {FDC2F87D-C798-4FDE-AE5F-8A0C69F72039}
+DAT 1365423988
+ORG {4C896322-AC7D-40AC-9C51-6505FA15FD74}
+DAT 1365423977
 ORG {53E3244C-D7B2-40BB-B121-AB2FB4077BA0}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DisplayPreferences>[DisplayPreferences]
 
 [DisplayPreferences\CLD]
@@ -3151,7 +3172,7 @@ MULA 0 Arial,8,N</a:FontList>
 </o:AssociationSymbol>
 <o:ClassSymbol Id="o7">
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-20998,-3823), (-8588,9737))</a:Rect>
+<a:Rect>((-20998,-4310), (-8588,10224))</a:Rect>
 <a:AutoAdjustToText>0</a:AutoAdjustToText>
 <a:LineColor>11184640</a:LineColor>
 <a:FillColor>16777136</a:FillColor>
@@ -3200,36 +3221,36 @@ LABL 0 Arial,8,N</a:FontList>
 </c:DefaultDiagram>
 <c:Classes>
 <o:Class Id="o10">
-<a:ObjectID>67C8A6D9-23D7-4016-8CBA-0C95522F96F3</a:ObjectID>
+<a:ObjectID>5E7F90E9-EC07-458E-B0DF-F96AE860E9FE</a:ObjectID>
 <a:Name>IO_Upload</a:Name>
 <a:Code>IoUpload</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {7B4FC6ED-7AD8-497A-BCB3-D82ED1DC87E8}
-DAT 1365244954
-ORG {A9AE7B9D-5EBC-4E68-9059-1819D7E38FAA}
-DAT 1365244937
+<a:History>ORG {9866B334-F8F0-44A2-8A10-8D64E2E47AAD}
+DAT 1365423988
+ORG {E954F167-0F13-4B22-BC3E-EBC7768F24C5}
+DAT 1365423977
 ORG {769A1BCD-09AF-4D27-A57B-9D1F89C545AD}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <a:PersistentCode>IO_UPLOAD</a:PersistentCode>
 <c:Attributes>
 <o:Attribute Id="o12">
-<a:ObjectID>88B9906A-10B7-46CA-A742-802495E7D193</a:ObjectID>
+<a:ObjectID>E5346CDE-4D5C-4D9B-B441-3E2783540E1F</a:ObjectID>
 <a:Name>io_upload_id</a:Name>
 <a:Code>ioUploadId</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {92D48700-42A9-4971-8624-6B9CA141138C}
-DAT 1365244954
-ORG {31063CB8-508A-4DB5-904F-BB6E481CAC94}
-DAT 1365244937
+<a:History>ORG {802787C0-95F4-4CC6-9A63-FB96B6B757A4}
+DAT 1365423988
+ORG {C9ACB117-4A15-45FE-B1A1-52465A451AB4}
+DAT 1365423977
 ORG {3A402587-A408-4E64-A2A8-14BD8F42E08A}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>VA8</a:PersistentDataType>
 <a:PersistentLength>8</a:PersistentLength>
@@ -3237,57 +3258,57 @@ DAT 1365244931</a:History>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o13">
-<a:ObjectID>44F176C2-2A16-436C-956D-67026572BBDC</a:ObjectID>
+<a:ObjectID>FBECCAAD-0450-46B3-BB66-76942A46609C</a:ObjectID>
 <a:Name>checksum</a:Name>
 <a:Code>checksum</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {30D1CE23-E861-4770-A45F-A7BF7FA0898D}
-DAT 1365244954
-ORG {A3E50197-078B-4275-A941-BFDC22E57045}
-DAT 1365244937
+<a:History>ORG {AD9C56BE-FEBF-4E7F-A987-8811ED0B29B2}
+DAT 1365423988
+ORG {6FD3AFF0-85F0-441C-9701-2AC8251DCAA8}
+DAT 1365423977
 ORG {F5ADED81-CBE6-4EB1-84A0-712460748C23}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>VA256</a:PersistentDataType>
 <a:PersistentLength>256</a:PersistentLength>
 <a:PersistentCode>CHECKSUM</a:PersistentCode>
 </o:Attribute>
 <o:Attribute Id="o14">
-<a:ObjectID>4C330373-8890-4870-9106-ACEF3277D4B1</a:ObjectID>
+<a:ObjectID>347781DB-211D-49B5-A858-2CC049B2A06C</a:ObjectID>
 <a:Name>packet_size</a:Name>
 <a:Code>packetSize</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {5F101CD3-953F-49B9-8C21-5AC4CDAA0BD2}
-DAT 1365244954
-ORG {3231A1AD-5FC7-4142-BF95-52FEC2168CF4}
-DAT 1365244937
+<a:History>ORG {6D68704C-54A0-4961-B242-D78CC274EDEA}
+DAT 1365423988
+ORG {3E43ED65-92BE-4DBC-8782-94D935D1F3A7}
+DAT 1365423977
 ORG {5B13FFBC-217C-47CD-9FC6-667EAC8E6ABC}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>int</a:DataType>
 <a:PersistentDataType>I</a:PersistentDataType>
 <a:PersistentCode>PACKET_SIZE</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o15">
-<a:ObjectID>9C4489E7-BFD7-44EC-9309-DA41324CC25B</a:ObjectID>
+<a:ObjectID>CD035AF3-7939-4573-A44C-D78C243E472A</a:ObjectID>
 <a:Name>filename</a:Name>
 <a:Code>filename</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {4793D63E-8007-48F2-948F-F0A486A38681}
-DAT 1365244954
-ORG {132A7465-35C9-41B3-BC0B-91C5C9236CDC}
-DAT 1365244937
+<a:History>ORG {F293849F-4331-483C-8AC5-51434DCC2A1A}
+DAT 1365423988
+ORG {9DF50FFB-B2D7-47B7-AF1E-EEA53F473311}
+DAT 1365423977
 ORG {BA0BAE42-001A-48BC-B45F-D40612C3E97E}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>VA260</a:PersistentDataType>
 <a:PersistentLength>260</a:PersistentLength>
@@ -3295,38 +3316,38 @@ DAT 1365244931</a:History>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o16">
-<a:ObjectID>437D05B8-65DB-42A5-9158-825030F6C91D</a:ObjectID>
+<a:ObjectID>0E31EC20-5D2C-4D54-91BF-E5E589E9C6CF</a:ObjectID>
 <a:Name>output_path</a:Name>
 <a:Code>outputPath</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {614F9596-8C8C-45CB-B36F-5794C02816DC}
-DAT 1365244954
-ORG {FB47B7E7-0CA3-4347-A2EA-A67836797CD9}
-DAT 1365244937
+<a:History>ORG {454EEC49-4460-440E-8A4F-1E146AF4FB3F}
+DAT 1365423988
+ORG {DB40268F-AB48-469F-84F1-EEA296ADC0EB}
+DAT 1365423977
 ORG {20E8440D-C806-4C69-934F-0A83E1FC25BA}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>VA260</a:PersistentDataType>
 <a:PersistentLength>260</a:PersistentLength>
 <a:PersistentCode>OUTPUT_PATH</a:PersistentCode>
 </o:Attribute>
 <o:Attribute Id="o17">
-<a:ObjectID>B665A821-D13B-498E-A228-27B0F301F622</a:ObjectID>
+<a:ObjectID>2ED4D181-7D97-4D1C-99EA-1719C3514A1D</a:ObjectID>
 <a:Name>upload_path</a:Name>
 <a:Code>uploadPath</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {CD237220-E985-4622-B1D5-DF9F77BDE472}
-DAT 1365244954
-ORG {2C4DA51F-4835-4DEF-806D-D1BC48299CE0}
-DAT 1365244937
+<a:History>ORG {F8FBA41C-5F49-4FBC-BA8E-AE53CAE82C46}
+DAT 1365423988
+ORG {4015E056-E7EC-4D17-A127-6D2EEA1B1973}
+DAT 1365423977
 ORG {F120B924-7DCF-4B3A-992E-36B80DD54AC8}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>VA260</a:PersistentDataType>
 <a:PersistentLength>260</a:PersistentLength>
@@ -3334,19 +3355,19 @@ DAT 1365244931</a:History>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o18">
-<a:ObjectID>539FA033-977F-418C-B341-94E111AC6812</a:ObjectID>
+<a:ObjectID>A2022D31-73DA-477A-9CDF-6F5DC1F98CE2</a:ObjectID>
 <a:Name>client_ip</a:Name>
 <a:Code>clientIp</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {41BB5EEE-9078-4475-A6D1-660D5E2DCFF7}
-DAT 1365244954
-ORG {4099D6BA-8F32-4203-99E9-1708D3F0CC1E}
-DAT 1365244937
+<a:History>ORG {BC124A08-4FF0-4A61-B86F-98378E2F53A8}
+DAT 1365423988
+ORG {9C8E3F4C-2DF1-4F84-A5B3-518296B61461}
+DAT 1365423977
 ORG {20F31C5A-3CFE-46A0-A505-4475122F9920}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>VA200</a:PersistentDataType>
 <a:PersistentLength>200</a:PersistentLength>
@@ -3354,193 +3375,213 @@ DAT 1365244931</a:History>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o19">
-<a:ObjectID>D95A3955-2D2B-4A39-A87E-42259267804A</a:ObjectID>
+<a:ObjectID>F95A2965-8084-4C69-AAB8-FBADDEBF2646</a:ObjectID>
 <a:Name>begin_date</a:Name>
 <a:Code>beginDate</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {E01F2420-ECDC-4C2E-A298-69E4DF978E0D}
-DAT 1365244954
-ORG {88CA4A48-DF29-4174-87CF-DEAFBDD4E5D2}
-DAT 1365244937
+<a:History>ORG {F0163262-2ACE-4FC6-9696-E838D7AC8325}
+DAT 1365423988
+ORG {D33B7097-8F7A-4108-958B-CB0701E79EB3}
+DAT 1365423977
 ORG {DA39CA77-1E37-4839-9BF2-C670A455F4D5}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>Date</a:DataType>
 <a:PersistentDataType>TS</a:PersistentDataType>
 <a:PersistentCode>BEGIN_DATE</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o20">
-<a:ObjectID>F474A4D4-15FF-4ED3-83F8-FA4620249648</a:ObjectID>
+<a:ObjectID>B32199CE-7DA3-4601-A8B0-4AAFC5914C65</a:ObjectID>
 <a:Name>file_size</a:Name>
 <a:Code>fileSize</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {8BFE35AE-086F-41BC-B4E5-CB63C3FCCE30}
-DAT 1365244954
-ORG {52FBB6A5-C8E5-449F-809D-6F80DED445A6}
-DAT 1365244937
+<a:History>ORG {3093C9C5-C9E1-4891-9813-C9DC83FBB1A2}
+DAT 1365423988
+ORG {01947557-2B0E-4A9B-A5FD-A686FD026A28}
+DAT 1365423977
 ORG {D39B3F1C-1D67-4AAD-B981-405506C3D0BC}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>int</a:DataType>
 <a:PersistentDataType>I</a:PersistentDataType>
 <a:PersistentCode>FILE_SIZE</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o21">
-<a:ObjectID>6CF5C8EE-28FE-4433-972B-16B343E82AA4</a:ObjectID>
+<a:ObjectID>C526BFC0-310C-449D-AEDA-FFA49C9244D2</a:ObjectID>
 <a:Name>upload_complete</a:Name>
 <a:Code>uploadComplete</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {AFAB76D5-8896-484E-AC3E-D7650515A251}
-DAT 1365244954
-ORG {BE3AB7C1-CA42-47DB-A49A-6717E10E7F7D}
-DAT 1365244937
+<a:History>ORG {1D1F3BC8-18F2-4817-9FFF-D3793821F491}
+DAT 1365423988
+ORG {B20FF984-CC3F-4345-B2E4-5D1E0D27D65F}
+DAT 1365423977
 ORG {B0CE5618-B40D-498A-A705-DB7917E2DA11}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>boolean</a:DataType>
 <a:PersistentDataType>BL</a:PersistentDataType>
 <a:PersistentCode>UPLOAD_COMPLETE</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 <o:Attribute Id="o22">
-<a:ObjectID>9FF1B7C6-D7D9-48FA-8266-20EBAF15D63C</a:ObjectID>
-<a:Name>packet_num</a:Name>
-<a:Code>packetNum</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:ObjectID>13BB8409-A879-42CA-AF7C-A1B7751E813F</a:ObjectID>
+<a:Name>packet_count</a:Name>
+<a:Code>packetCount</a:Code>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {26371D82-1057-46A9-A130-6D24CA523338}
-DAT 1365244954
-ORG {52AC148C-BBC1-42F6-B934-418378F7FF66}
-DAT 1365244937
-ORG {D10F37E1-62A9-4138-A5F7-F867F499E931}
-DAT 1365244931</a:History>
+<a:History>ORG {047A2322-E923-45C9-AB05-3B1351A367C4}
+DAT 1365423988
+ORG {E1690E35-D210-4441-A003-91FC838A6B26}
+DAT 1365423977
+ORG {CBDDA3BE-8C7E-4503-84CD-132D78A3D28E}
+DAT 1365423969</a:History>
 <a:DataType>int</a:DataType>
 <a:PersistentDataType>I</a:PersistentDataType>
-<a:PersistentCode>PACKET_NUM</a:PersistentCode>
+<a:PersistentCode>PACKET_COUNT</a:PersistentCode>
+<a:Multiplicity>1..1</a:Multiplicity>
+</o:Attribute>
+<o:Attribute Id="o23">
+<a:ObjectID>2425FF1C-B2FE-47DB-930E-39EA36B5DC0B</a:ObjectID>
+<a:Name>content_type</a:Name>
+<a:Code>contentType</a:Code>
+<a:CreationDate>1365423988</a:CreationDate>
+<a:Creator>developpement</a:Creator>
+<a:ModificationDate>1365423988</a:ModificationDate>
+<a:Modifier>developpement</a:Modifier>
+<a:History>ORG {C5B05074-DE47-447E-AB9F-425E880E2E42}
+DAT 1365423988
+ORG {E923668D-0D9B-4B84-B1B2-A4E18682AD16}
+DAT 1365423977
+ORG {F1DC775F-3607-4EF8-B8D2-3E89712E2329}
+DAT 1365423969</a:History>
+<a:DataType>String</a:DataType>
+<a:PersistentDataType>VA260</a:PersistentDataType>
+<a:PersistentLength>260</a:PersistentLength>
+<a:PersistentCode>CONTENT_TYPE</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
 </c:Attributes>
 <c:Identifiers>
-<o:Identifier Id="o23">
-<a:ObjectID>211C4C85-99E0-427B-80D6-C48E1E3584C4</a:ObjectID>
+<o:Identifier Id="o24">
+<a:ObjectID>A0CF5F19-F412-4B73-A21A-5643923931B2</a:ObjectID>
 <a:Name>Identifiant_1</a:Name>
 <a:Code>IDENTIFIANT_1</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {3213773A-75D5-4EAB-8B25-9BBE16A9AF6A}
-DAT 1365244954
-ORG {7ED66FCF-4724-4235-9A15-A050870D36BA}
-DAT 1365244937
+<a:History>ORG {4E32CB46-2B95-4016-BA29-AC0C4E306C3A}
+DAT 1365423988
+ORG {6E8A07F7-FC8E-401C-ACC7-C68169A8BD3A}
+DAT 1365423977
 ORG {60266B70-87BE-464C-AE47-BFF5BD09C1A9}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <c:Identifier.Attributes>
 <o:Attribute Ref="o12"/>
 </c:Identifier.Attributes>
 </o:Identifier>
 </c:Identifiers>
 <c:PrimaryIdentifier>
-<o:Identifier Ref="o23"/>
+<o:Identifier Ref="o24"/>
 </c:PrimaryIdentifier>
 </o:Class>
 <o:Class Id="o11">
-<a:ObjectID>EA5FA35E-F590-4D02-A502-DE5997C74EEE</a:ObjectID>
+<a:ObjectID>3E23413D-0E13-4192-A032-06DCBE93C39A</a:ObjectID>
 <a:Name>IO_packet</a:Name>
 <a:Code>IoPacket</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {527350EF-E7E1-4074-B887-C91BF0873678}
-DAT 1365244954
-ORG {90FE34F1-1C73-4755-A81E-FFA77C3B8258}
-DAT 1365244937
+<a:History>ORG {EC134CEC-1E2D-4B53-8935-2AFA699D5610}
+DAT 1365423988
+ORG {43507BE1-335F-4F85-B421-00E32D72C859}
+DAT 1365423977
 ORG {2E5642EC-55DD-41CA-80A6-F2AF7C7602AE}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:UseParentNamespace>0</a:UseParentNamespace>
 <a:PersistentCode>IO_PACKET</a:PersistentCode>
 <c:Attributes>
-<o:Attribute Id="o24">
-<a:ObjectID>EA9F392F-641D-4F41-8982-3535D50DADAF</a:ObjectID>
+<o:Attribute Id="o25">
+<a:ObjectID>0D1BC214-5DA9-405E-A3F8-DE9F935509E1</a:ObjectID>
 <a:Name>io_packet_id</a:Name>
 <a:Code>ioPacketId</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {3C0E5C42-DDAF-4F46-815F-ECD4002FA6BF}
-DAT 1365244954
-ORG {06FDBAB3-6D31-4949-BBD3-3730EDBFD1DA}
-DAT 1365244937
+<a:History>ORG {2B6D40E0-0722-4244-A1BE-9612CDCF9B35}
+DAT 1365423988
+ORG {BD8DAD34-A7D3-42CB-9C1B-0A16DDB6476E}
+DAT 1365423977
 ORG {AE086CDA-A54B-4377-8CF2-681939E2B45D}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>int</a:DataType>
 <a:PersistentDataType>I</a:PersistentDataType>
 <a:PersistentCode>IO_PACKET_ID</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
-<o:Attribute Id="o25">
-<a:ObjectID>C1C23725-CDC1-4C92-A4AD-D304676D273A</a:ObjectID>
+<o:Attribute Id="o26">
+<a:ObjectID>BFCC1295-A390-4369-9B45-D3316E031C7D</a:ObjectID>
 <a:Name>base64_data</a:Name>
 <a:Code>base64Data</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {094C1331-6AE4-4403-B22A-46839F134939}
-DAT 1365244954
-ORG {519635EC-9D78-4A44-BBF4-01A812D07B38}
-DAT 1365244937
+<a:History>ORG {8D1E7C22-FCD3-492F-8FBC-B37A278BD5C5}
+DAT 1365423988
+ORG {1FFE57A7-D83A-44F8-9ADF-581E020AAA8E}
+DAT 1365423977
 ORG {531BA3EC-4229-4D56-A3DF-87BBF2D23BE2}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>String</a:DataType>
 <a:PersistentDataType>TXT</a:PersistentDataType>
 <a:PersistentCode>BASE64_DATA</a:PersistentCode>
 </o:Attribute>
-<o:Attribute Id="o26">
-<a:ObjectID>43236AAC-9E0D-42CA-AA44-6AC3662A0E1F</a:ObjectID>
+<o:Attribute Id="o27">
+<a:ObjectID>DAF216CA-ACEE-4000-A9EA-3BA4D92A462A</a:ObjectID>
 <a:Name>packet_status</a:Name>
 <a:Code>packetStatus</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {A733B782-A7D3-466C-9935-EAFB625AC00D}
-DAT 1365244954
-ORG {2DF47FB0-8BE9-4900-9D0A-952A06431784}
-DAT 1365244937
+<a:History>ORG {CBA87B41-0A8F-40F5-B072-2BE411D2F937}
+DAT 1365423988
+ORG {4FFF9D2B-11AD-42D6-9B34-80EE0FCA760A}
+DAT 1365423977
 ORG {A42139C0-EB5E-4687-8FC6-2F8880503A91}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>boolean</a:DataType>
 <a:PersistentDataType>BL</a:PersistentDataType>
 <a:PersistentCode>PACKET_STATUS</a:PersistentCode>
 <a:Multiplicity>1..1</a:Multiplicity>
 </o:Attribute>
-<o:Attribute Id="o27">
-<a:ObjectID>A15F740E-1FBB-4CBB-AFB7-FB77F75E6084</a:ObjectID>
+<o:Attribute Id="o28">
+<a:ObjectID>789B31CF-590B-4F68-A2DA-DF43C467002E</a:ObjectID>
 <a:Name>packet_num</a:Name>
 <a:Code>packetNum</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {09F46591-423D-45B9-9AA6-73E172087508}
-DAT 1365244954
-ORG {490D80A6-BF83-44C9-8EFD-F647364A5CF5}
-DAT 1365244937
+<a:History>ORG {7E9D482F-4B23-49DA-875B-FC9525CDA3F1}
+DAT 1365423988
+ORG {A2A1E20C-C46E-45BB-8A65-7BA41955BDEB}
+DAT 1365423977
 ORG {BFD52E9D-33A4-496D-BCA0-ED72FE12C828}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:DataType>int</a:DataType>
 <a:PersistentDataType>I</a:PersistentDataType>
 <a:PersistentCode>PACKET_NUM</a:PersistentCode>
@@ -3548,45 +3589,45 @@ DAT 1365244931</a:History>
 </o:Attribute>
 </c:Attributes>
 <c:Identifiers>
-<o:Identifier Id="o28">
-<a:ObjectID>A1075DF4-6A92-4A8B-BE24-22105C89472A</a:ObjectID>
+<o:Identifier Id="o29">
+<a:ObjectID>E1AB0451-5D5A-4658-AC45-3AA9CC1C884C</a:ObjectID>
 <a:Name>Identifiant_1</a:Name>
 <a:Code>IDENTIFIANT_1</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {6B87A766-16E1-453B-96E0-F578CF326815}
-DAT 1365244954
-ORG {F70F99D2-7395-4BE7-8F5C-A05BEDED432D}
-DAT 1365244937
+<a:History>ORG {AB0F2CF3-906E-48BE-B589-0E706C7E8140}
+DAT 1365423988
+ORG {3C1D3868-AEDE-44DF-8799-3CF309A8BB44}
+DAT 1365423977
 ORG {30FB8E6D-D6BA-431A-9A43-0101D06DACCF}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <c:Identifier.Attributes>
-<o:Attribute Ref="o24"/>
+<o:Attribute Ref="o25"/>
 </c:Identifier.Attributes>
 </o:Identifier>
 </c:Identifiers>
 <c:PrimaryIdentifier>
-<o:Identifier Ref="o28"/>
+<o:Identifier Ref="o29"/>
 </c:PrimaryIdentifier>
 </o:Class>
 </c:Classes>
 <c:Associations>
 <o:Association Id="o9">
-<a:ObjectID>F77EEF9E-61D3-4598-BCA8-538310B4E4F6</a:ObjectID>
+<a:ObjectID>C360D500-2F6D-40E8-AA08-E78308F0C901</a:ObjectID>
 <a:Name>IO_stocker</a:Name>
 <a:Code>IO_STOCKER</a:Code>
-<a:CreationDate>1365244954</a:CreationDate>
+<a:CreationDate>1365423988</a:CreationDate>
 <a:Creator>developpement</a:Creator>
-<a:ModificationDate>1365244954</a:ModificationDate>
+<a:ModificationDate>1365423988</a:ModificationDate>
 <a:Modifier>developpement</a:Modifier>
-<a:History>ORG {646797F9-5CAD-4B1E-B7D5-CF79C0C87D31}
-DAT 1365244954
-ORG {97CBDEA8-97CD-4583-9144-C86585A15009}
-DAT 1365244937
+<a:History>ORG {438B3E32-8ECF-44A3-94DD-535CE1E24BF9}
+DAT 1365423988
+ORG {14BF0032-423C-42A8-B4F8-3BD8464F03A6}
+DAT 1365423977
 ORG {1324698D-2933-4A5D-AE50-8641E41F18D1}
-DAT 1365244931</a:History>
+DAT 1365423969</a:History>
 <a:RoleAMultiplicity>1..1</a:RoleAMultiplicity>
 <a:RoleBMultiplicity>0..*</a:RoleBMultiplicity>
 <a:RoleANavigability>1</a:RoleANavigability>
@@ -3599,7 +3640,7 @@ DAT 1365244931</a:History>
 </o:Association>
 </c:Associations>
 <c:TargetModels>
-<o:TargetModel Id="o29">
+<o:TargetModel Id="o30">
 <a:ObjectID>48EE2E87-C0F2-4FBD-80E3-AA68DA9AB9DB</a:ObjectID>
 <a:Name>PHP (WFW)</a:Name>
 <a:Code>PHP (WFW)</a:Code>
@@ -3614,7 +3655,7 @@ DAT 1365244931</a:History>
 <o:Shortcut Ref="o4"/>
 </c:SessionShortcuts>
 </o:TargetModel>
-<o:TargetModel Id="o30">
+<o:TargetModel Id="o31">
 <a:ObjectID>157E4D08-19AF-4032-A923-91B9B8755FF4</a:ObjectID>
 <a:Name>io</a:Name>
 <a:Code>IO</a:Code>

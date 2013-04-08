@@ -14,7 +14,7 @@ CREATE OR REPLACE FUNCTION io_create_upload(
         p_filename io_upload.filename%type,
         p_output_path io_upload.output_path%type,
         p_upload_path io_upload.upload_path%type, -- si NULL, l'upload est réalisé en base
-        p_client_ip io_upload.client_ip%type,
+        p_client_ip io_upload.upload_client_ip%type,
         p_content_type io_upload.content_type%type
 )
 RETURNS RESULT AS
@@ -48,7 +48,7 @@ BEGIN
             FILENAME,
             OUTPUT_PATH,
             UPLOAD_PATH,
-            CLIENT_IP,
+            UPLOAD_CLIENT_IP,
             FILE_SIZE,
             PACKET_COUNT,
             CONTENT_TYPE
