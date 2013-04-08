@@ -62,6 +62,28 @@ class IOModule implements iModule
     public static function makeView($name,$attributes,$template_file){ 
     }
     
+    /**
+     * @brief Obtient les données décodées d'un fichier uploadé
+     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
+     * @param $data Pointeur recevant les données
+     * @return Résultat de procédures
+     */
+    public static function getData($upload,&$data)
+    {
+        //identifiant de l'item
+        $id = $upload instanceof IoUpload ? $upload->ioUploadId : $upload;
+
+        //prepare la requete
+        if(!IoPacketMgr::getAll($list, "io_upload_id = '$id' order by packet_num"))
+            return false;
+        
+        $data="";
+        foreach($list as $key=>$inst){
+            $data .= base64_decode($inst->base64Data);
+        }
+
+        return RESULT_OK();
+    }
 }
 
 ?>
