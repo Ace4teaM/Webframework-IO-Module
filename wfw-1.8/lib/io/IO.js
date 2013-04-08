@@ -440,35 +440,50 @@ YUI.add('wfw-io', function (Y) {
                 [bool] true en cas de succès, false en cas d'erreur
         */
         readFileOffset_base64: function (file, start, size, callback, param) {
-            wfw.puts("wfw.IO.readFileOffset_base64...");
             var reader = new FileReader();
+            
+            start=parseInt(start);
+            size=parseInt(size);
+            wfw.puts("wfw.IO.readFileOffset_base64: File size="+file.size+", Read[ofs:"+start+"->"+(start+size)+", size:"+size+"]");
 
             //tout le fichier ?
-            if (!start && !size) {
+            /*if (!start && !size) {
                 start = 0;
                 size = file.size;
             }
             //restant
             else if (start && !size) {
                 size = file.size - start;
-            }
+            }*/
 
+            if (start+size > file.size){
+                wfw.puts("wfw.IO.readFileOffset_base64: Invalid data range !");
+                return false;
+            }
+            
             //wfw.puts("Slice file size=" + size + " start=" + start);
             //Slicer...
             var blob;
-            if (file.webkitSlice)
-                blob = file.webkitSlice(start, start + size, 'application/octet-stream');
-            else if (file.mozSlice)
-                blob = file.mozSlice(start, start + size);
-            else if (file.slice)
-                blob = file.slice(start, size);
+            var slice = file.slice || file.webkitSlice || file.mozSlice;
+            if (slice)
+                blob = slice.call(file, start, start + size, 'application/octet-stream');
             else {
                 wfw.puts("wfw.IO.readFileOffset_base64: Slice file is not disponible on your navigator !");
                 return false;
             }
+            
+            if(blob.size != size){
+                wfw.puts("wfw.IO.readFileOffset_base64: Invalid blob size !");
+                wfw.puts("wfw.IO.readFileOffset_base64: blob.size("+blob.size+") != size("+size+")");
+                return false;
+            }
 
+            
+            //Lit le fichier
             reader.param = param;
             reader.callback = callback;
+            reader.onabort = function (evt) {alert("onabort");}
+            reader.onerror = function (evt) {alert("onerror");}
             reader.onloadend = function (evt) {
                 if (evt.target.readyState == FileReader.DONE) {
                     //supprime l'entete des données (base64 only)
@@ -486,8 +501,6 @@ YUI.add('wfw-io', function (Y) {
                     this.callback(start, size, data, this.param);
                 }
             };
-
-            //Lit le fichier
             reader.readAsDataURL(blob); //base64 encodé
             //reader.readAsBinaryString(blob);
 
