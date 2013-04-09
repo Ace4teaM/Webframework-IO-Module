@@ -7,6 +7,9 @@
     
     <index>
         <page id="index" name="Accueil">index.php</page>
+        <!-- wfw -->
+        <page id="datamodel" role="visitor" name="Obtient le model de données">ctrl.php?app=wfw&amp;ctrl=datamodel</page>
+        <page id="datafetch" role="administrator" name="Obtient des données">ctrl.php?app=wfw&amp;ctrl=datafetch</page>
         <!-- admin -->
         <!-- visiteur -->
         <page id="check_upload" role="visitor" name="Test l'etat du processus d'upload">ctrl.php?app=io_module&amp;ctrl=check_upload</page>
@@ -78,7 +81,6 @@
             <APP_MSG_UNDEFINED_FIELD_FORMAT>L'Application doit définir le format du champs '$FIELD_NAME'. Ajoutez ce format à la configuration (section [fields_formats]).</APP_MSG_UNDEFINED_FIELD_FORMAT>
             <APP_MSG_UNDEFINED_FIELD_CLASS>L'Application doit définir la classe du champs '$CLASS_NAME'.</APP_MSG_UNDEFINED_FIELD_CLASS>
             
-            
             <!-- **************************************************************
                    IO Module
             ************************************************************** -->
@@ -88,7 +90,20 @@
             <!-- **************************************************************
                    IO Module
             ************************************************************** -->
+            <io_upload_id>Upload</io_upload_id>
+            <checksum>Checksum</checksum>
+            <packet_size>Taille de paquet</packet_size>
+            <filename>Nom de fichier</filename>
+            <output_path>Dossier de sortie</output_path>
+            <upload_path>Dossier d'upload</upload_path>
+            <upload_client_ip>IP client</upload_client_ip>
+            <begin_date>Date début</begin_date>
             <file_size>Taille du fichier</file_size>
+            <content_type>Type de contenu</content_type>
+            <io_packet_id>Paquet</io_packet_id>
+            <base64_data>Données (encodé en base64)</base64_data>
+            <packet_status>Statut</packet_status>
+            <packet_num>N° Paquet</packet_num>
         </fields>
         
     </results>
