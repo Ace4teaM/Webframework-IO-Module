@@ -12,8 +12,9 @@
         <page id="datafetch" role="administrator" name="Obtient des données">ctrl.php?app=wfw&amp;ctrl=datafetch</page>
         <!-- admin -->
         <!-- visiteur -->
-        <page id="check_upload" role="visitor" name="Test l'etat du processus d'upload">ctrl.php?app=io_module&amp;ctrl=check_upload</page>
         <page id="upload_file" role="visitor" name="Test l'envoi d'un fichier">ctrl.php?app=application&amp;ctrl=upload_file</page>
+        <page id="upload_editor" role="visitor" name="Editeur">ctrl.php?app=application&amp;ctrl=upload_editor</page>
+        <page id="check_upload" role="visitor" name="Test l'etat du processus d'upload">ctrl.php?app=io_module&amp;ctrl=check_upload</page>
         <page id="begin_upload" role="visitor" name="Débute un envoie">ctrl.php?app=io_module&amp;ctrl=begin_upload</page>
         <page id="finalize_upload" role="visitor" name="Finalise un envoie">ctrl.php?app=io_module&amp;ctrl=finalize_upload</page>
         <page id="packet_upload" role="visitor" name="Envoie un paquet">ctrl.php?app=io_module&amp;ctrl=packet_upload</page>
