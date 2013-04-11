@@ -21,9 +21,9 @@
 */
 
 /*
- * Envoie un message
- * Rôle : Administrateur
- * UC   : mail_send_message
+ * Prépare l'upload d'un fichier
+ * Rôle : Visiteur
+ * UC   : begin_upload
  */
 
 class Ctrl extends cApplicationCtrl{
