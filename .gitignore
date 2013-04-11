@@ -3,3 +3,4 @@
 !/.gitignore
 /nbproject/private/
 /wfw-1.8/bin/upload/*
+/wfw-1.8/bin/public/*

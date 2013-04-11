@@ -199,7 +199,7 @@ YUI.add('wfw-io', function (Y) {
             // demande la création d'un processus d'upload
             wfw.Request.Add(
                 null,
-                wfw.Navigator.getURI("begin_upload"),
+                wfw.Navigator.getURI("io_begin_upload"),
                 {
                     file_size: file.size,
                     content_type: file.type, 
@@ -235,7 +235,7 @@ YUI.add('wfw-io', function (Y) {
             // prepare la requete d'envoi
             var packetReq = {
                 name:null,
-                url:wfw.Navigator.getURI("packet_upload"),
+                url:wfw.Navigator.getURI("io_packet_upload"),
                 args:{
                     io_upload_id: infos.io_upload_id, 
                     packet_num: null,//a redefinir
@@ -267,7 +267,7 @@ YUI.add('wfw-io', function (Y) {
             // prepare la requete de verification
             var checkReq = {
                 name:null,
-                url:wfw.Navigator.getURI("check_upload"),
+                url:wfw.Navigator.getURI("io_check_upload"),
                 args:{
                     io_upload_id: infos.io_upload_id, 
                     filename: file.name,

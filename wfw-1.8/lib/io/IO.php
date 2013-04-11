@@ -84,6 +84,66 @@ class IOModule implements iModule
 
         return RESULT_OK();
     }
+    
+    /**
+     * @brief Obtient les données décodées d'un fichier uploadé
+     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
+     * @param $data Pointeur recevant les données
+     * @return Résultat de procédures
+     */
+    function makeUpload($filename, $file_size, $content_type, $output_dir, $upload_dir, $ip)
+    {
+        $mode = $app->getCfgValue("io_module","storage_mode");
+
+        // Vérifie la taille maximum alloué à l'upload
+        $max_size = $app->getCfgValue("io_module","max_upload_size");
+        if($file_size > $max_size)
+            return RESULT(cResult::Failed, "IO_FILE_TO_BIG");
+        if($file_size < 1)
+            return RESULT(cResult::Failed, "IO_ZERO_FILE_SIZE");
+
+        // Crée le dossier d'upload si besoin
+        if($upload_dir == null)
+            $upload_dir = $app->getCfgValue("io_module","upload_dir");
+        if($mode=="file" && !file_exists($upload_dir))
+            return RESULT(cResult::Failed, "IO_UPLOAD_DIR_NOT_EXISTS");
+
+        // Initialise l'entree en BDD
+        $output_dir = $app->getCfgValue("io_module","public_output_dir");
+        if(!$app->callStoredProc('io_create_upload',
+            $file_size,
+            $filename,
+            $output_dir,
+            ($mode=="file") ? ($upload_dir) : NULL,
+            $ip,
+            $content_type
+        )) return false;
+        $result = cResult::getLast();
+
+        // 4. Prepare l'espace de stockage
+        $io_upload_id = $result->getAtt("IO_UPLOAD_ID");
+        $packet_size  = intval($result->getAtt("PACKET_SIZE")); //$app->getCfgValue("io_module","packet_size");
+        $packet_count = intval($result->getAtt("PACKET_COUNT")); // intval(ceil($p->file_size / $packet_size));
+        if($mode == "file"){
+            // 3a. Crée un fichier dummy qui va recevoir les données
+            $upload_file_name  = $upload_dir."/".$io_upload_id;
+            if($fp = fopen($upload_file_name, "wb"))
+            {
+                fseek($fp, $p->file_size-1, SEEK_SET);
+                fwrite($fp, 0xFF, 1);//dernier block
+                fclose($fp);
+            }
+            else
+                return RESULT(cResult::Failed, "IO_DUMMY_UPLOAD_FILE_CREATE");
+        }
+        else{
+            // 3a. Initialise les entrees en base de données
+            // (aucune action necessaire)
+        }
+        
+        //OK
+        return RESULT_INST($result);
+    }
 }
 
 ?>

@@ -54,6 +54,21 @@
             }
        );
     </script>
+    
+    
+    <script type="text/javascript" src="js/MyApp.IO.Upload.Image.js"></script>
+    <script type="text/javascript">
+        MyApp.Loading.addCallback(
+            function(Y){
+                var wfw = Y.namespace("wfw");
+
+                var imgForm = Ext.create('MyApp.IO.Upload.Image', {
+                    renderTo:'imageUpload'
+                });
+                imgForm.loadImage("uJaliw16");
+            }
+       );
+    </script>
 </head>
 
 <!-- Document -->
@@ -65,6 +80,9 @@
     
     <h2>Extjs/Dialog</h2>
     <div>Fichier: <input id="file2" name="file2" type="file" /><input id="extjsDialogBtn" type="button" value="Envoyer" /></div>
+    
+    <h2>Extjs/Image</h2>
+    <div id="imageUpload" style="width:600px;height:400px;"></div>
     
     
 </body>
