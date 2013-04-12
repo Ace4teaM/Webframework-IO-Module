@@ -60,8 +60,10 @@ Ext.define('MyApp.IO.UploadDialog', {
         layout: 'fit',
         closable: true,
         modal:true,
-        callback:function(data){},
-        fileEl: null
+        onReady:function(data){},
+        fileEl: null,
+        io_begin_upload_uri    : null,
+        io_finalize_upload_uri : null
     },
 
     constructor: function(config) {
@@ -103,7 +105,15 @@ Ext.define('MyApp.IO.UploadDialog', {
             ]
         });
 
+        if(this.io_begin_upload_uri == null)
+            this.io_begin_upload_uri = wfw.Navigator.getURI("io_begin_upload");
+        
+        if(this.io_finalize_upload_uri == null)
+            this.io_finalize_upload_uri = wfw.Navigator.getURI("io_finalize_upload");
+        
         wfw.IO.sendFileFromElement(this.fileEl,{
+            io_begin_upload_uri : this.io_begin_upload_uri,
+            io_finalize_upload_uri : this.io_finalize_upload_uri,
             callback:function(args,status){
                 switch(status){
                     case wfw.IO.UploadStatus.Begin:
@@ -113,17 +123,21 @@ Ext.define('MyApp.IO.UploadDialog', {
                         wfw.puts(me.infos);
                         break;
                     case wfw.IO.UploadStatus.Update:
-                        me.progressBar.updateProgress(1.0/me.max_part * parseFloat(me.part),'Téléchargement de par ('+me.part+' sur '+me.max_part+')...');
+                        me.progressBar.updateProgress(1.0/me.max_part * parseFloat(me.part),'Téléchargement de part ('+me.part+' sur '+me.max_part+')...');
                         me.part++;
                         break;
                     case wfw.IO.UploadStatus.End:
                         me.progressBar.updateProgress(1.0/me.max_part * parseFloat(me.part),'Téléchargement terminé ('+me.max_part+' parts envoyés)');
+                        Ext.apply(me.closeBtn, { text: "Terminer" });
+                        me.onReady(args);
                         break;
                     case wfw.IO.UploadStatus.Failed:
                         me.progressBar.updateText('Echec du téléchargement');
+                        Ext.apply(me.closeBtn, { text: "Terminer" });
                         break;
                     case wfw.IO.UploadStatus.Error:
                         me.progressBar.updateText('Erreur de téléchargement');
+                        Ext.apply(me.closeBtn, { text: "Terminer" });
                         break;
                 }
             }

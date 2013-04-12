@@ -169,6 +169,7 @@ YUI.add('wfw-io', function (Y) {
           Update:"update",
           End:"end"
         },
+        
         /*
         Upload un fichier en paquets
         Paramètres:
@@ -178,6 +179,8 @@ YUI.add('wfw-io', function (Y) {
             [function]  callback     : Callback appelé une fois le fichier totalement uploadé: callback(args,state,infos)
             [string]    form_id      : Identificateur de formulaire utilisé pour le résultat
             [string]    client_pwd   : ( Non utilisé ), Mot-de-passe du dossier client
+            [string]    io_begin_upload_uri    : URL du controleur d'initialisation, si null l'index 'io_begin_upload' est utilisé
+            [string]    io_finalize_upload_uri : URL du controleur de finalisation, si null l'index 'io_finalize_upload_uri' est utilisé
         Retourne:
             [bool] true en cas de succès, false en cas d'erreur
         */
@@ -188,18 +191,21 @@ YUI.add('wfw-io', function (Y) {
             var opt = {
                 callback:function(args,state,infos){},
                 form_id:"",
-                client_pwd:""
+                client_pwd:"",
+                io_begin_upload_uri    : wfw.Navigator.getURI("io_begin_upload"),
+                //io_finalize_upload_uri : wfw.Navigator.getURI("io_finalize_upload"),
+                //io_packet_upload_uri   : wfw.Navigator.getURI("io_packet_upload")
             };
             if(typeof(att)!="undefined")
                 opt=object_merge(opt,att);
-            
+
             // reponse de la requete 'begin_upload'
             var infos = null;
             
             // demande la création d'un processus d'upload
             wfw.Request.Add(
                 null,
-                wfw.Navigator.getURI("io_begin_upload"),
+                opt.io_begin_upload_uri,
                 {
                     file_size: file.size,
                     content_type: file.type, 

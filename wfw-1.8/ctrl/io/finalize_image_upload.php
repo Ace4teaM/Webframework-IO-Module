@@ -29,7 +29,7 @@
 
 class Ctrl extends cApplicationCtrl {
 
-    public $fields = array('io_upload_id', 'x1f', 'y1f', 'x2f', 'y2f');
+    public $fields = array('io_upload_id', 'rx', 'lx', 'ty', 'by');
     public $op_fields = null;
 
     private $image = null;
@@ -93,20 +93,24 @@ class Ctrl extends cApplicationCtrl {
         //obtient les dimentions de l'image
         list($org_w, $org_h) = getimagesize($upload_file_name);
 
+        // verifie les dimention de la selection
+        if($p->lx<0 || $p->ty<0 || $p->rx>=$org_w || $p->by>=$org_h)
+            return RESULT(cResult::Failed, "IO_INVALID_SRC_SIZE");
+    
         //
         // Calcule le rectangle source (en pixels)
         //
-        $src_rect = (object)array(
+        /*$src_rect = (object)array(
             "x1" => intval($p->x1f * $org_w),
             "y1" => intval($p->y1f * $org_h),
             "x2" => intval($p->x2f * $org_w),
             "y2" => intval($p->y2f * $org_h) 
-        );
-        $src_w = $src_rect->x2 - $src_rect->x1;
-        $src_h = $src_rect->y2 - $src_rect->y1;
+        );*/
+        $src_w = $p->rx - $p->lx;
+        $src_h = $p->by - $p->ty;
 
-        if (!$src_w || !$src_h)
-            return RESULT(cResult::Failed, "IO_INVALID_SRC_SIZE");
+        //if (!$src_w || !$src_h)
+        //    return RESULT(cResult::Failed, "IO_INVALID_SRC_SIZE");
 
         //
         // Calcule la taille de destination (en pixels)
@@ -135,7 +139,7 @@ class Ctrl extends cApplicationCtrl {
         imagesavealpha($new_image, true);
 
         //copie dans la nouvelle image
-        imagecopyresampled($new_image, $image, 0, 0, $src_rect->x1, $src_rect->y1, $dst_w, $dst_h, $src_w, $src_h);
+        imagecopyresampled($new_image, $image, 0, 0, $p->lx, $p->ty, $dst_w, $dst_h, $src_w, $src_h);
 
         //
         // Sauvegarde l'image

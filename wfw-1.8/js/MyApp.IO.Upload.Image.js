@@ -26,7 +26,7 @@ Ext.define('MyApp.IO.Upload', {});
 /*
  *------------------------------------------------------------------------------------------------------------------
  * @brief Construit un formulaire d'image
- * @param array wfw_fields Liste des définitions de champs (voir MyApp.DataModel.makeField)
+ * @param string io_upload_id Identifiant de l'upload
  *------------------------------------------------------------------------------------------------------------------
  */
 Ext.define('MyApp.IO.Upload.Image', {
@@ -34,16 +34,17 @@ Ext.define('MyApp.IO.Upload.Image', {
 
     config:{
         layout:'border',
-        begin_upload_uri : null, //io_begin_upload
-        finalize_upload_uri : null, //io_finalize_upload,
+        io_begin_upload_uri : null, //io_begin_upload
+        io_finalize_upload_uri : null, //io_finalize_upload,
         width:600,
-        height:300,
+        height:240,
         io_upload_id:null
     },
     
     imageEl : null,
     fileEl : null,
     containerEl : null,
+    infosEl : null,
     zoomCtrl : null,
     xCtrl : null,
     yCtrl : null,
@@ -52,16 +53,20 @@ Ext.define('MyApp.IO.Upload.Image', {
     org_w : 0,
     org_h : 0,
         
-    //taille originale de l'image (en pixels)
-    scale : 1.0,
-    x : 0.5,
-    y : 0.5,
-        
+    //facteurs
+    scale : 1.0, // echelle de taille de l'image (0-1)
+    x : 0.5, // position de vue X (0-1)
+    y : 0.5, // position de vue Y (0-1)
+
     initComponent: function()
     {
         var wfw = Y.namespace("wfw");
         var me = this;
         
+        this.infosEl = Ext.create('Ext.AbstractComponent', {
+            autoEl: { tag: 'div', html:'wxcwx' }
+        });
+
         this.imageEl = Ext.create('Ext.AbstractComponent', {
             autoEl: { tag: 'img', cls: 'title-bar' }
         });
@@ -74,40 +79,47 @@ Ext.define('MyApp.IO.Upload.Image', {
         };
 
         this.fileEl = Ext.create('Ext.AbstractComponent', {
-            autoEl: { tag: 'input', type: 'file', width: 100, height:20 }
+            autoEl: { tag: 'input', type: 'file', style:'display:none;', width: 100, height:20 },
+            afterRender:function(){
+                var fileEl = Y.Node(this.getEl().dom);
+                fileEl.on("change",me.uploadFileChange,me,fileEl);
+            }
         });
 
         this.zoomCtrl = Ext.create('Ext.slider.Single', {
+            fieldLabel:'Zoom',
             width: 214,
             minValue: 0,
-            hideLabel: true,
             useTips: false,
             maxValue: 100
         });
         this.zoomCtrl.on("change",function( slider, newValue, thumb, eOpts ){
             me.setScale(newValue/100.0);
+            me.updateInfos();
         });
 
         this.xCtrl = Ext.create('Ext.slider.Single', {
+            fieldLabel:'H',
             width: 214,
             minValue: 0,
-            hideLabel: true,
             useTips: false,
             maxValue: 100
         });
         this.xCtrl.on("change",function( slider, newValue, thumb, eOpts ){
             me.setX(newValue/100.0);
+            me.updateInfos();
         });
 
         this.yCtrl = Ext.create('Ext.slider.Single', {
+            fieldLabel:'V',
             width: 214,
             minValue: 0,
-            hideLabel: true,
             useTips: false,
             maxValue: 100
         });
         this.yCtrl.on("change",function( slider, newValue, thumb, eOpts ){
             me.setY(newValue/100.0);
+            me.updateInfos();
         });
 
         Ext.apply(this, {
@@ -125,7 +137,7 @@ Ext.define('MyApp.IO.Upload.Image', {
                     items:[me.containerEl]
                 },
                 {
-                    title:"Parametres",
+                    title:"Paramètres",
                     border:false,
                     bodyPadding:6,
                     layout:'vbox',
@@ -133,7 +145,7 @@ Ext.define('MyApp.IO.Upload.Image', {
                     defaults:{
                         width:'100%'
                     },
-                    items:[me.fileEl,me.zoomCtrl,me.xCtrl,me.yCtrl]
+                    items:[me.fileEl,me.zoomCtrl,me.xCtrl,me.yCtrl,me.infosEl]
                 }
             ]
         });
@@ -149,15 +161,16 @@ Ext.define('MyApp.IO.Upload.Image', {
                         scope:me,
                         handler:function(){
                             var fileEl = Y.Node(me.fileEl.getEl().dom);
-                            //fileEl.simulate("click");
-                            Y.Event.simulate(me.fileEl.getEl().dom, 'change');
+                            Y.Event.simulate(me.fileEl.getEl().dom, 'click');
                         }
                     },
                     {
-                        iconCls: 'wfw_icon config',
+                        iconCls: 'wfw_icon refresh',
                         text: 'Rétablir',
                         scope:me,
-                        handler:function(){}
+                        handler:function(){
+                            me.resetScale();
+                        }
                     },
                     '->',
                     {
@@ -170,11 +183,11 @@ Ext.define('MyApp.IO.Upload.Image', {
             }]
         });
 
-        if(this.begin_upload_uri == null)
-            this.begin_upload_uri = wfw.Navigator.getURI("io_begin_upload");
+        if(this.io_begin_upload_uri == null)
+            this.io_begin_upload_uri = wfw.Navigator.getURI("io_begin_upload");
         
-        if(this.finalize_upload_uri == null)
-            this.finalize_upload_uri = wfw.Navigator.getURI("io_finalize_upload");
+        if(this.io_finalize_upload_uri == null)
+            this.io_finalize_upload_uri = wfw.Navigator.getURI("io_finalize_image_upload");
         
         if(this.io_upload_id)
             this.loadImage(this.io_upload_id);
@@ -187,7 +200,68 @@ Ext.define('MyApp.IO.Upload.Image', {
         this.superclass.constructor.call(this,config);
         return this;
     },
+
+    /** le fichier a changé */
+    uploadFileChange: function(e,fileEl) {
+        var wfw = Y.namespace("wfw");
+        var me = this;
+
+        var dlg = Ext.create('MyApp.IO.UploadDialog',{
+            fileEl   : fileEl.getDOMNode(),
+            begin_upload_uri: me.begin_upload_uri,
+            onReady : function(args){
+                //charge l'image nouvellement telecharge
+                me.loadImage(args.io_upload_id);
+            }
+        });
+        dlg.show();
+    },
     
+    /** actaulise l'affichage des infos */
+    updateInfos : function() {
+        var pos = this.toPixelPos();
+        //this.infosEl.update('position '+pos.x+','+pos.y+' : '+pos.w+','+pos.h);
+        var overflow = this.isOverflow(pos);
+        
+        this.infosEl.update(
+             'position : '+pos.cx+','+pos.cy+'<br/>'
+            +'rectangle: '+pos.lx+','+pos.rx+'=>'+pos.ty+','+pos.by+'<br/>'
+            +(overflow ? 'invalide' : 'valide')
+        );
+    },
+    
+    /** verifie si la position données dépasse les limites de l'image */
+    isOverflow : function(pos) {
+        if(!pos)
+            pos = this.toPixelPos();
+        if(pos.lx<0 || pos.ty<0 || pos.rx>=this.org_w || pos.by>=this.org_h)
+            return true;
+        return false;
+    },
+    
+    /** retourne le rectangle de selection en pixels */
+    toPixelPos : function() {
+        //facteur de taille du rectangle visible
+        var screen_ofs_factor_x = this.containerEl.width / this.org_w;
+        var screen_ofs_factor_y = this.containerEl.height / this.org_h;
+        //facteur de taille d'un pixel (1+)
+        var scale_pixel = this.org_w / (this.org_w * this.scale);
+        
+        var pos = {
+            //position du centre
+            cx:parseInt(this.x * this.org_w),
+            cy:parseInt(this.y * this.org_h),
+            //position du rectangle
+            lx:parseInt((this.x-(screen_ofs_factor_x/2.0) * scale_pixel) * this.org_w),
+            ty:parseInt((this.y-(screen_ofs_factor_y/2.0) * scale_pixel) * this.org_h),
+            rx:parseInt((this.x+(screen_ofs_factor_x/2.0) * scale_pixel) * this.org_w),
+            by:parseInt((this.y+(screen_ofs_factor_y/2.0) * scale_pixel) * this.org_h)
+        };
+        
+        return pos;
+    },
+
+    /** définit le facteur d'echelle */
     setScale : function(factor) {
         factor = parseFloat(factor);
 
@@ -208,6 +282,7 @@ Ext.define('MyApp.IO.Upload.Image', {
         this.zoomCtrl.setValue(factor*100);
     },
 
+    /** définit la position d'affiche sur X */
     setX : function(factor) {
         factor = parseFloat(factor);
 
@@ -228,6 +303,7 @@ Ext.define('MyApp.IO.Upload.Image', {
         this.xCtrl.setValue(factor*100);
     },
 
+    /** définit la position d'affiche sur Y */
     setY : function(factor) {
         factor = parseFloat(factor);
 
@@ -248,6 +324,7 @@ Ext.define('MyApp.IO.Upload.Image', {
         this.yCtrl.setValue(factor*100);
     },
 
+    /** charge une image uploadé */
     loadImage : function(io_upload_id) {
         var wfw = Y.namespace("wfw");
         var me = this;
@@ -258,30 +335,44 @@ Ext.define('MyApp.IO.Upload.Image', {
         
             me.resetScale();
         });
-        imgEl.set("src",wfw.Navigator.getURI("io_get_data")+"&io_upload_id="+io_upload_id);
+        this.img_url = wfw.Navigator.getURI("io_get_data")+"&io_upload_id="+io_upload_id;
+        imgEl.set("src",this.img_url);
         this.io_upload_id = io_upload_id;
     },
 
+    /** reinitialise la vue */
     resetScale : function() {
-        this.setScale(1.0);
+        //ajuste le scaling à la taille de l'image
+        var scale;
+        if(this.org_w > this.org_h){
+            scale = this.containerEl.height / this.org_h;
+        }
+        else{
+            scale = this.containerEl.width / this.org_w;
+        }
+        
+        this.setScale(scale);
         this.setX(0.5);
         this.setY(0.5);
     },
     
+    /** applique la transformation */
     applyImage : function() {
         var wfw = Y.namespace("wfw");
         var me = this;
         
+        var pos = this.toPixelPos();
+        
         // demande la création d'un processus d'upload
         wfw.Request.Add(
             null,
-            wfw.Navigator.getURI("io_finalize_image_upload"),
+            me.io_finalize_upload_uri,
             {
                 io_upload_id: me.io_upload_id,
-                x1f: 0.2,
-                y1f: 0.2,
-                x2f: 0.8,
-                y2f: 0.8,
+                lx: pos.lx,
+                rx: pos.rx,
+                ty: pos.ty,
+                by: pos.by,
                 output:'xarg'
             },
             wfw.XArg.onCheckRequestResult, 
@@ -297,4 +388,3 @@ Ext.define('MyApp.IO.Upload.Image', {
         );
     }
 });
-    
