@@ -25,6 +25,8 @@ Ext.define('MyApp.IO.Upload', {});
 
 /*
  *------------------------------------------------------------------------------------------------------------------
+ * @class Image
+ * @memberof MyApp.IO.Upload
  * @brief Construit un formulaire d'image
  * @param string io_upload_id Identifiant de l'upload
  *------------------------------------------------------------------------------------------------------------------
