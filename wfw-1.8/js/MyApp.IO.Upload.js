@@ -73,7 +73,7 @@ Ext.define('MyApp.IO.Upload.Editor', {
         var cols  = ["io_upload_id", "filename", "content_type", "output_path", "upload_path", "upload_client_ip"];
 
         //obtient les données
-        var myData = MyApp.DataModel.fetchData(table,cols);
+        var myData = wfw.DataModel.fetchData(table,cols);
 
         // crée le model de données
         var store = MyApp.DataModel.createArrayStore(cols,myData);
