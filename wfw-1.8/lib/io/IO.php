@@ -33,6 +33,11 @@ require_once("php/xml_default.php");
     
 class IOModule implements iModule
 {
+    //Repository
+    const RepositoryAlreadyExists  = "IO_REPOSITORY_ALREADY_EXISTS";
+    const CantLinkEvent            = "IO_CANT_LINK_EVENT";
+    const RepositoryNotExists      = "IO_REPOSITORY_NOT_EXISTS";
+    
     /**
      * @brief Initialise le module
      * @param $local_path Chemin d'accès local vers ce dossier
