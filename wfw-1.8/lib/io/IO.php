@@ -26,9 +26,9 @@
  */
 
 
-require_once("php/class/bases/iModule.php");
-require_once("php/class/bases/socket.php");
-require_once("php/xml_default.php");
+require_once("class/bases/iModule.php");
+require_once("class/bases/socket.php");
+require_once("xml_default.php");
 
     
 class IOModule implements iModule
@@ -148,6 +148,79 @@ class IOModule implements iModule
         
         //OK
         return RESULT_INST($result);
+    }
+    
+    /**
+     * @brief Fabrique un dossier de dêpot
+     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
+     * @param $data Pointeur recevant les données
+     * @return Résultat de procédures
+     */
+    function getMakeRepository($repository_id, $fields)
+    {
+        if(!$this->getRepositoryInfos($repository_id,$infos))
+            return false;
+        
+        $fields_doc = new XMLDocument("1.0", "utf-8");
+        $fields_doc->load($infos["file_path"]);
+        
+        $doc = $fields_doc;
+        
+        return RESULT_OK();
+    }
+    
+    /**
+     * @brief Fabrique un dossier de dêpot
+     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
+     * @param $data Pointeur recevant les données
+     * @return Résultat de procédures
+     */
+    function getRepositoryFieldsDoc($repository_id, &$doc)
+    {
+        if(!$this->getRepositoryInfos($repository_id,$infos))
+            return false;
+        
+        $fields_doc = new XMLDocument("1.0", "utf-8");
+        $fields_doc->load($infos["file_path"]);
+        
+        $doc = $fields_doc;
+        
+        return RESULT_OK();
+    }
+    
+    /**
+     * @brief Fabrique un dossier de dêpot
+     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
+     * @param $data Pointeur recevant les données
+     * @return Résultat de procédures
+     */
+    function getRepositoryFields($repository_id, &$array)
+    {
+        if(!$this->getRepositoryFieldsDoc($repository_id,$fields_doc))
+            return false;
+        
+        $fields_doc->toArray($array);
+        
+        return RESULT_OK();
+    }
+    
+    /**
+     * @brief Fabrique un dossier de dêpot
+     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
+     * @param $data Pointeur recevant les données
+     * @return Résultat de procédures
+     */
+    function getRepositoryInfos($repository_id,&$infos)
+    {
+        $file_path = $app->getCfgValue("io_module","repository_data_path")."/$repository_id.xml";
+        $data_path = $app->getCfgValue("io_module","repository_data_path")."/$repository_id";
+
+        if(file_exists($file_path))
+            return RESULT(cResult::Failed, IOModule::RepositoryAlreadyExists);
+
+        $infos = array( 'file_path'=>$file_path, 'data_path'=>$data_path );
+
+        return RESULT_OK();
     }
 }
 
