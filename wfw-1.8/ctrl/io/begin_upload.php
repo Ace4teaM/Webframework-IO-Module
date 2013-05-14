@@ -23,10 +23,10 @@
 /*
  * Prépare l'upload d'un fichier
  * Rôle : Visiteur
- * UC   : begin_upload
+ * UC   : 
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_begin_upload_ctrl extends cApplicationCtrl{
     public $fields    = array('file_size', 'filename', 'content_type');
     public $op_fields = null;
 

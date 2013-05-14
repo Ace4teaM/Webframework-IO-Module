@@ -26,7 +26,7 @@
  * UC   : mail_send_message
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_upload_file_ctrl extends cApplicationCtrl{
     public $fields    = null;
     public $op_fields = null;
 

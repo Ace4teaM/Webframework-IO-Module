@@ -26,7 +26,7 @@
  * UC   : .
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_upload_editor_ctrl extends cApplicationCtrl{
     public $fields    = null;
     public $op_fields = null;
 

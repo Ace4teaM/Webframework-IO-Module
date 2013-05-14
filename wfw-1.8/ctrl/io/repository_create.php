@@ -26,7 +26,7 @@
  * UC   : repository_create
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_repository_create_ctrl extends cApplicationCtrl{
     public $fields    = array();
     public $op_fields = array('repository_id', 'repository_pwd', 'repository_type', 'is_readonly', 'is_event', 'use_data', 'note');
     

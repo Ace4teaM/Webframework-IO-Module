@@ -21,12 +21,12 @@
 */
 
 /*
- * Envoie un message
+ * Finalise un upload
  * Rôle : Administrateur
- * UC   : mail_send_message
+ * UC   : finalize_upload
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_finalize_upload_ctrl extends cApplicationCtrl{
     public $fields    = array('token', 'filename');
     public $op_fields = null;
 

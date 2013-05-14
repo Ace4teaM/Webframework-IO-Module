@@ -21,12 +21,12 @@
 */
 
 /*
- * Envoie un message
+ * Envoi les données d'un paquet
  * Rôle : Administrateur
- * UC   : mail_send_message
+ * UC   : packet_upload
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_packet_upload_ctrl extends cApplicationCtrl{
     public $fields    = array('io_upload_id', 'packet_num', 'packet_size', 'base64_data');
     public $op_fields = null;
 

@@ -22,12 +22,12 @@
  */
 
 /*
- * Envoie un message
+ * Finalise l'upload d'une image
  * Rôle : Administrateur
- * UC   : mail_send_message
+ * UC   : finalize_image_upload
  */
 
-class Ctrl extends cApplicationCtrl {
+class io_module_finalize_image_upload_ctrl extends cApplicationCtrl {
 
     public $fields = array('io_upload_id', 'rx', 'lx', 'ty', 'by');
     public $op_fields = null;

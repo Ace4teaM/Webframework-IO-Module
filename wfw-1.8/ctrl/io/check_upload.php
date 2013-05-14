@@ -26,7 +26,7 @@
  * UC   : check_upload
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_check_upload_ctrl extends cApplicationCtrl{
     public $fields    = array('io_upload_id');
     public $op_fields = null;
 

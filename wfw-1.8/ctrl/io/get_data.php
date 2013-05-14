@@ -26,7 +26,7 @@
  * UC   : get_data
  */
 
-class Ctrl extends cApplicationCtrl{
+class io_module_get_data_ctrl extends cApplicationCtrl{
     public $fields    = array('io_upload_id');
     public $op_fields = array('encoded_output');
 
