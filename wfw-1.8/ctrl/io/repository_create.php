@@ -132,6 +132,8 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
             if(!symlink($file_path, $link_filename)) 
                 return RESULT(cResult::System, IOModule::CantLinkEvent);
         }
+        
+        return RESULT_OK();
     }
 
 };
