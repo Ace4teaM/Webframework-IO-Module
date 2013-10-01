@@ -32,9 +32,13 @@
     <results lang="fr">
         <codes></codes>
 
-        <errors></errors>
+        <errors>
+            <IO_UPLOAD_DIR_NOT_EXISTS>Le répertoire d'upload n'existe pas sur le serveur</IO_UPLOAD_DIR_NOT_EXISTS>
+        </errors>
         
-        <messages></messages>
+        <messages>
+            <IO_UPLOAD_DIR_NOT_EXISTS>Merci de vérifier l'accès au répertoire: $DIR</IO_UPLOAD_DIR_NOT_EXISTS>
+        </messages>
         
         <fields>
             <!-- **************************************************************

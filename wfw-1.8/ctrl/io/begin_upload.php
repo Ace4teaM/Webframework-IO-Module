@@ -44,7 +44,7 @@ class io_module_begin_upload_ctrl extends cApplicationCtrl{
         // 2. Crée le dossier d'upload si besoin
         $upload_dir = $app->getCfgValue("io_module","upload_dir");
         if($mode=="file" && !file_exists($upload_dir))
-            return RESULT(cResult::Failed, "IO_UPLOAD_DIR_NOT_EXISTS");
+            return RESULT(cResult::Failed, "IO_UPLOAD_DIR_NOT_EXISTS",array("DIR"=>$upload_dir));
         //if(!file_exists($upload_dir) && (cmd("mkdir ".$upload_dir,$cmd_out)!=0))
         //    return RESULT(cResult::Failed, "IO_CANT_CREATE_UPLOAD_DIR");
 
