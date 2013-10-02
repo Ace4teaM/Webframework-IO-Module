@@ -35,7 +35,7 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
         $timestamp   = time();
         
         //
-        // Génére le nom de dêpot
+        // 1. Génère le nom de dépôt
         //
         if($p->repository_id === null)
             $p->repository_id = (rand(100,900).'-'.$timestamp);
@@ -45,14 +45,14 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
         $data_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id;
         
         //
-        // vérifie si le dossier existe
+        // 2. érifie si le dossier existe
         //
         if(file_exists($file_path))
             return RESULT(cResult::Failed, IOModule::RepositoryAlreadyExists);
 
 
         //
-        // Cree le document XML
+        // 3. Crée le document XML avec l'ensemble des données reçues en paramètres
         //
         $fields_doc = new XMLDocument("1.0", "utf-8");
         $fields_doc->appendChild($fields_doc->createElement('data'));
@@ -85,13 +85,13 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
         chmod($file_path,0644);
 
         //
-        // Crée le dossier de données?
+        // 4. Crée le dossier de données (si besoin)
         //      
         if(($p->use_data) && !file_exists($data_path) && (cmd("mkdir ".$data_path,$cmd_out)!=0))
             return RESULT(cResult::Failed, cApplication::CantCreateResource, array("file"=>$data_path));
 
         //
-        // Envoie un mail de notification
+        // 5. Envoie un mail de notification
         //
         $template = $app->getCfgValue("io_module","repository_notify_template");
         $mail     = $app->getCfgValue("io_module","repository_notify_mail");
@@ -121,7 +121,7 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
         }
         
         //
-        // Attache un événement
+        // 6. Attache un événement
         //
         if($p->is_event){
             $link_filename = $app->getCfgValue("io_module","repository_event_path")."/".$p->repository_id;
@@ -133,7 +133,7 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
                 return RESULT(cResult::System, IOModule::CantLinkEvent);
         }
         
-        return RESULT_OK();
+        return RESULT(cResult::Ok,cResult::Success,array("repository_id"=>$p->repository_id));
     }
 
 };
