@@ -222,6 +222,99 @@ class IOModule implements iModule
 
         return RESULT_OK();
     }
+    
+    /**
+     * Tronque une image en miniature
+     * @param type $image    Image source
+     * @param type $size     Hauteur/Largeur désirée de la destination
+     * @param type $src_w    Largeur utilisé dans l'image source
+     * @param type $src_h    Hauteur utilisé dans l'image source
+     * @param type $src_x    Offset X utilisé dans l'image source
+     * @param type $src_y    Offset Y utilisé dans l'image source
+     * @return Résultat de procédure
+     * @retval resource Identifiant de ressource de la nouvelle image
+     */
+    public static function truncateImageThumb($image,$size,$src_w,$src_h,$src_x,$src_y){ 
+        //obtient les dimentions de l'image
+        $org_w = imagesx($image);
+        $org_h = imagesy($image);
+
+        //
+        // Calcule la taille de destination (en pixels)
+        //
+        if(!$src_w||!$src_h){
+            $src_w = ($org_w>$org_h)?$org_h:$org_w;
+            $src_h = $src_w;
+        }
+        if ($src_h > $src_w) {
+            $dst_w = intval(($size / $src_h) * $src_w);
+            $dst_h = $size;
+        } else {
+            $dst_w = $size;
+            $dst_h = intval(($size / $src_w) * $src_h);
+        }
+
+        if (!$dst_w || !$dst_h)
+            return RESULT(cResult::Failed, "IO_INVALID_DST_SIZE");
+
+        //
+        // Crée la nouvelle image
+        //
+        $new_image = imagecreatetruecolor($dst_w, $dst_h);
+        if (!$new_image)
+            return RESULT(cResult::Failed, "IO_CREATE_IMAGE");
+        imagealphablending($new_image, true);
+        imagesavealpha($new_image, true);
+
+        //copie dans la nouvelle image
+        imagecopyresampled($new_image, $image, 0, 0, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+
+        RESULT_OK();
+        return $new_image;
+    }
+    
+    /**
+     * Tronque la taille d'une image 
+     * @param type $image    Image source
+     * @param type $size     Hauteur/Largeur maximale désirée pour la destination
+     * @return Résultat de procédure
+     * @retval resource Identifiant de ressource de la nouvelle image
+     */
+    public static function truncateImage($image,$size){ 
+        //obtient les dimentions de l'image
+        $src_w = imagesx($image);
+        $src_h = imagesy($image);
+
+        //
+        // Calcule la taille de destination (en pixels)
+        //
+        if ($src_h > $src_w) {
+            $dst_w = intval(($size / $src_h) * $src_w);
+            $dst_h = $size;
+        } else {
+            $dst_w = $size;
+            $dst_h = intval(($size / $src_w) * $src_h);
+        }
+
+        if (!$dst_w || !$dst_h)
+            return RESULT(cResult::Failed, "IO_INVALID_DST_SIZE");
+
+        //
+        // Crée la nouvelle image
+        //
+        $new_image = imagecreatetruecolor($dst_w, $dst_h);
+        if (!$new_image)
+            return RESULT(cResult::Failed, "IO_CREATE_IMAGE");
+        imagealphablending($new_image, true);
+        imagesavealpha($new_image, true);
+
+        //copie dans la nouvelle image
+        imagecopyresampled($new_image, $image, 0, 0, 0, 0, $dst_w, $dst_h, $src_w, $src_h);
+
+        RESULT_OK();
+        return $new_image;
+    }
+    
 }
 
 ?>
