@@ -175,9 +175,9 @@ class IOModule implements iModule
      * @param $data Pointeur recevant les données
      * @return Résultat de procédures
      */
-    function getRepositoryFieldsDoc($repository_id, &$doc)
+    public static function getRepositoryFieldsDoc($repository_id, &$doc)
     {
-        if(!$this->getRepositoryInfos($repository_id,$infos))
+        if(!self::getRepositoryInfos($repository_id,$infos))
             return false;
         
         $fields_doc = new XMLDocument("1.0", "utf-8");
@@ -194,29 +194,29 @@ class IOModule implements iModule
      * @param $data Pointeur recevant les données
      * @return Résultat de procédures
      */
-    function getRepositoryFields($repository_id, &$array)
+    public static function getRepositoryFields($repository_id, &$array)
     {
-        if(!$this->getRepositoryFieldsDoc($repository_id,$fields_doc))
+        if(!self::getRepositoryFieldsDoc($repository_id,$fields_doc))
             return false;
         
-        $fields_doc->toArray($array);
-        
+        $array=$fields_doc->toArray();
         return RESULT_OK();
     }
     
     /**
-     * @brief Fabrique un dossier de dêpot
-     * @param $upload Instance ou identifiant de l'objet Upload (IoUpload)
-     * @param $data Pointeur recevant les données
+     * @brief Obtient les informations sur un dêpot
+     * @param $upload Identifiant du dêpot
+     * @param $infos Pointeur recevant les données
      * @return Résultat de procédures
      */
-    function getRepositoryInfos($repository_id,&$infos)
+    public static function getRepositoryInfos($repository_id,&$infos)
     {
+        global $app;
         $file_path = $app->getCfgValue("io_module","repository_data_path")."/$repository_id.xml";
         $data_path = $app->getCfgValue("io_module","repository_data_path")."/$repository_id";
 
-        if(file_exists($file_path))
-            return RESULT(cResult::Failed, IOModule::RepositoryAlreadyExists);
+        if(!file_exists($file_path))
+            return RESULT(cResult::Failed, IOModule::RepositoryNotExists);
 
         $infos = array( 'file_path'=>$file_path, 'data_path'=>$data_path );
 
