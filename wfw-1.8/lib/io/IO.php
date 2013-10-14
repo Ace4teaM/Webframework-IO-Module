@@ -156,15 +156,31 @@ class IOModule implements iModule
      * @param $data Pointeur recevant les données
      * @return Résultat de procédures
      */
-    function getMakeRepository($repository_id, $fields)
+    public static function getRepository($repository_id, &$doc, &$infos)
     {
-        if(!$this->getRepositoryInfos($repository_id,$infos))
+        if(!self::getRepositoryInfos($repository_id,$infos))
             return false;
         
-        $fields_doc = new XMLDocument("1.0", "utf-8");
-        $fields_doc->load($infos["file_path"]);
+        $doc = new XMLDocument("1.0", "utf-8");
+        return $doc->load($infos["file_path"]);
+    }
+    
+    
+    /**
+     * @brief Supprime un dêpot
+     * @param $repository_id Identifiant du dêpot à supprimé
+     * @return Résultat de procédures
+     */
+    public static function removeRepository($repository_id)
+    {
+        if(!self::getRepositoryInfos($repository_id,$infos))
+            return false;
         
-        $doc = $fields_doc;
+        if(file_exists($infos["file_path"]) && !unlink($infos["file_path"]))
+            return RESULT(cResult::System,cApplication::CantRemoveResource,error_get_last());
+        
+        if(file_exists($infos["data_path"]) && !rrmdir($infos["data_path"]))
+            return false;//rrmdir result
         
         return RESULT_OK();
     }
