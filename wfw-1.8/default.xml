@@ -36,6 +36,7 @@
             <IO_UPLOAD_DIR_NOT_EXISTS>Le répertoire d'upload n'existe pas sur le serveur</IO_UPLOAD_DIR_NOT_EXISTS>
             <IO_REPOSITORY_ALREADY_EXISTS>Le dépôt existe déjà</IO_REPOSITORY_ALREADY_EXISTS>
             <IO_CANT_LINK_EVENT>Impossible de lié un événement à ce dépôt</IO_CANT_LINK_EVENT>
+            <IO_REPOSITORY_NOT_EXISTS>Le dépôt n'existe pas</IO_REPOSITORY_NOT_EXISTS>
         </errors>
         
         <messages>
@@ -62,6 +63,7 @@
             <base64_data>Données (encodé en base64)</base64_data>
             <packet_status>Statut</packet_status>
             <packet_num>N° Paquet</packet_num>
+            <repository_id>Dêpot</repository_id>
         </fields>
         
     </results>
