@@ -57,6 +57,7 @@
                 case "packet":
                     var callback = args[1];
                     var callback_failed = args[2];
+                    var callback_update = args[3];
                     
                     //urls
                     var begin_uri    = "io_begin_upload";
@@ -83,6 +84,8 @@
                                 packet_count = xargs.packet_count;
                                 packet_size  = xargs.packet_size;
                                 console.log("BEGIN UPLOAD (io_upload_id="+xargs.io_upload_id+", "+req.args.file_size+" bytes)");
+                                //callback
+                                callback_update("begin",xargs);
                             },
                             onfailed:function(req,xargs){
                                 callback_failed(xargs);
@@ -99,6 +102,8 @@
                     var packetReq = {
                         onsuccess: function (obj, args) {
                             console.log("sendAsPacket: Packet n°"+args.packet_num+" envoyé");
+                            //callback
+                            callback_update("packet",args);
                             //continue l'upload avec le prochain paquet
                             $(window).request("xarg",check_uri,{io_upload_id:io_upload_id},copy(checkReq));
                         },
@@ -118,7 +123,7 @@
                             callback(args,filename);
                             console.log(args);
                             console.log("checkReq: FINALIZE\n");
-
+                                
                             //transfer les paquets
                             $(window).request(
                                 "xarg",
@@ -132,6 +137,7 @@
                                 checkReq
                             );
                                 
+                            callback_update("end",args);
                             console.log("checkReq: END\n");
                         },
                         onfailed: function (obj, args) {
