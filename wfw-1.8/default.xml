@@ -20,7 +20,8 @@
         <page id="io_begin_upload" role="visitor" name="Débute un envoie">ctrl.php?app=io_module&amp;ctrl=begin_upload</page>
         <page id="io_finalize_upload" role="visitor" name="Finalise un envoie">ctrl.php?app=io_module&amp;ctrl=finalize_upload</page>
         <page id="io_packet_upload" role="visitor" name="Envoie un paquet">ctrl.php?app=io_module&amp;ctrl=packet_upload</page>
-        <page id="io_get_data" role="visitor" name="Telecharger un fichier">ctrl.php?app=io_module&amp;ctrl=get_data</page>
+        <page id="io_get_data" role="visitor" name="Télécharge un fichier">ctrl.php?app=io_module&amp;ctrl=get_data</page>
+        <page id="io_repository_view" role="visitor" name="Affiche les champs un dêpot">ctrl.php?app=io_module&amp;ctrl=repository_view</page>
         <!-- utilisateur -->
     </index>
 
