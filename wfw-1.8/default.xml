@@ -7,11 +7,9 @@
     
     <index>
         <page id="index" name="Accueil">index.php</page>
-        <!-- wfw -->
-        <page id="datamodel" role="visitor" name="Obtient le model de données">ctrl.php?app=wfw&amp;ctrl=datamodel</page>
-        <page id="datafetch" role="administrator" name="Obtient des données">ctrl.php?app=wfw&amp;ctrl=datafetch</page>
         <!-- admin -->
         <!-- visiteur -->
+        <page id="io_repository_set" role="visitor" name="Définit un dêpot de données">ctrl.php?app=io_module&amp;ctrl=repository_set</page>
         <page id="io_repository_create" role="visitor" name="Crée un dêpot de données">ctrl.php?app=io_module&amp;ctrl=repository_create</page>
         <page id="io_finalize_image_upload" role="visitor" name="Finalize l'upload d'une image">ctrl.php?app=io_module&amp;ctrl=finalize_image_upload</page>
         <page id="io_upload_file" role="visitor" name="Test l'envoi d'un fichier">ctrl.php?app=application&amp;ctrl=upload_file</page>
@@ -65,6 +63,7 @@
             <packet_status>Statut</packet_status>
             <packet_num>N° Paquet</packet_num>
             <repository_id>Dêpot</repository_id>
+            <repository_type>Type de dêpot</repository_type>
         </fields>
         
     </results>
