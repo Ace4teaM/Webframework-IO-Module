@@ -45,7 +45,7 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
         $data_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id;
         
         //
-        // 2. érifie si le dossier existe
+        // 2. Vérifie si le dossier existe
         //
         if(file_exists($file_path))
             return RESULT(cResult::Failed, IOModule::RepositoryAlreadyExists);
