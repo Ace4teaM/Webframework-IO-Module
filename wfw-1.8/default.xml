@@ -64,6 +64,15 @@
             <packet_num>N° Paquet</packet_num>
             <repository_id>Dêpot</repository_id>
             <repository_type>Type de dêpot</repository_type>
+            <repository_pwd>Mot-de-passe</repository_pwd>
+            
+            <io_entry_id>Entrée</io_entry_id>
+            <remote_ip>IP(v4)</remote_ip>
+            <timestamp>Time-Stamp UNIX</timestamp>
+            <is_readonly>Lecture seule</is_readonly>
+            <is_event>Événement</is_event>
+            <use_data>Dossier de données</use_data>
+            <note>Note</note>
         </fields>
         
     </results>
