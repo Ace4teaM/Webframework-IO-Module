@@ -40,13 +40,16 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
         if($p->repository_id === null)
             $p->repository_id = (rand(100,900).'-'.$timestamp);
         
-        //
-        $file_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id.".xml";
-        $data_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id;
+        $repository_path = $app->getCfgValue("io_module","repository_data_path");
+        $file_path = $repository_path."/".$p->repository_id.".xml";
+        $data_path = $repository_path."/".$p->repository_id;
         
         //
         // 2. Vérifie si le dossier existe
         //
+        if(!is_dir($repository_path))
+            return RESULT(cResult::Failed, IOModule::RepositoryPathNotExists, array("DIR"=>$repository_path));
+
         if(file_exists($file_path))
             return RESULT(cResult::Failed, IOModule::RepositoryAlreadyExists);
 

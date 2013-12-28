@@ -36,12 +36,14 @@
             <IO_REPOSITORY_ALREADY_EXISTS>Le dépôt existe déjà</IO_REPOSITORY_ALREADY_EXISTS>
             <IO_CANT_LINK_EVENT>Impossible de lié un événement à ce dépôt</IO_CANT_LINK_EVENT>
             <IO_REPOSITORY_NOT_EXISTS>Le dépôt n'existe pas</IO_REPOSITORY_NOT_EXISTS>
+            <IO_REPOSITORY_PATH_NOT_EXISTS>Le dossier de stockage du dépôt n'existe pas</IO_REPOSITORY_PATH_NOT_EXISTS>
         </errors>
         
         <messages>
             <IO_UPLOAD_DIR_NOT_EXISTS>Merci de vérifier l'accès au répertoire: $DIR</IO_UPLOAD_DIR_NOT_EXISTS>
             <IO_REPOSITORY_ALREADY_EXISTS>Veuillez utiliser un autre identifiant de dépôt</IO_REPOSITORY_ALREADY_EXISTS>
             <IO_CANT_LINK_EVENT>Veuillez vérifier les autorisations d’accès sur le serveur</IO_CANT_LINK_EVENT>
+            <IO_REPOSITORY_PATH_NOT_EXISTS>Merci de vérifier l'accès au répertoire: $DIR</IO_REPOSITORY_PATH_NOT_EXISTS>
         </messages>
         
         <fields>

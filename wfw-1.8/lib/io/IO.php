@@ -38,6 +38,7 @@ class IOModule implements iModule
     const CantLinkEvent            = "IO_CANT_LINK_EVENT";
     const RepositoryNotExists      = "IO_REPOSITORY_NOT_EXISTS";
     const InvalidPassword          = "IO_REPOSITORY_INVALID_PWD";
+    const RepositoryPathNotExists  = "IO_REPOSITORY_PATH_NOT_EXISTS";
     
     /**
      * @brief Initialise le module
