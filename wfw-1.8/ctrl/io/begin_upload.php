@@ -34,7 +34,7 @@ class io_module_begin_upload_ctrl extends cApplicationCtrl{
     {
         $mode = $app->getCfgValue("io_module","storage_mode");
 
-        // 1. Vérifie la taille maximum alloué à l'upload
+        // 1. Vérifie la taille minimum/maximum allouée à l'upload
         $max_size = $app->getCfgValue("io_module","max_upload_size");
         if($p->file_size > $max_size)
             return RESULT(cResult::Failed, "IO_FILE_TO_BIG");
