@@ -22,7 +22,7 @@
 
 /*
  * Finalise un upload
- * Rôle : Administrateur
+ * Rôle : Visiteur
  * UC   : finalize_upload
  */
 

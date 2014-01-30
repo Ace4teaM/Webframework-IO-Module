@@ -22,7 +22,7 @@
 
 /*
  * Envoi les données d'un paquet
- * Rôle : Administrateur
+ * Rôle : Visiteur
  * UC   : packet_upload
  */
 
@@ -37,14 +37,14 @@ class io_module_packet_upload_ctrl extends cApplicationCtrl{
         if(!IoUploadMgr::getById($upload, $p->io_upload_id))
             return false;
         
-        //verifie le numero du paquet
+        // 1. Vérifie le numéro du paquet
         if($p->packet_num < 0 || $p->packet_num >= $upload->packetCount)
             return RESULT(cResult::Failed,"IO_PACKET_NUM_OVERFLOW");
         
-         //offset du packet
+        //offset du packet
         $packet_offset = $upload->packetSize * $p->packet_num;
         
-        //taille du packet
+        // 2. Vérifie la taille du paquet reçu 
         if($p->packet_num == $upload->packetCount-1)//dernier paquet ?
             $packet_size   = $upload->fileSize-(($upload->packetCount-1)*$upload->packetSize);
         else
@@ -52,14 +52,12 @@ class io_module_packet_upload_ctrl extends cApplicationCtrl{
         if($packet_size != $p->packet_size)
             return RESULT(cResult::Failed,"IO_PACKET_SIZE_DIFFER");
 
-        //décode les données
+        // 3. Vérifie la taille des données décodées
         $data = base64_decode($p->base64_data);
-
-        //verifie la taille des données
         if(strlen($data) != $packet_size)
             return RESULT(cResult::Failed,"IO_INVALID_DATA_SIZE",array("message"=>(strlen($data)." != $packet_size")));
         
-        // Ecrit les données a la volé dans le fichier
+        // 4. Ecrit les données à la volée dans le fichier 
         if($mode == "file")
         {
             $upload_file_name  = $upload->uploadPath."/".$p->io_upload_id;
