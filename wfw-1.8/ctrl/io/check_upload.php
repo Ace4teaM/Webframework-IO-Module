@@ -1,7 +1,7 @@
 <?php
 /*
     ---------------------------------------------------------------------------------------------------------------------------------------
-    (C)2012-2013 Thomas AUGUEY <contact@aceteam.org>
+    (C)2012-2014 Thomas AUGUEY <contact@aceteam.org>
     ---------------------------------------------------------------------------------------------------------------------------------------
     This file is part of WebFrameWork.
 
@@ -21,8 +21,8 @@
 */
 
 /*
- * Détermine le statut d'un envoie
- * Rôle : Administrateur
+ * Détermine le statut d'un envoi
+ * Rôle : Visiteur
  * UC   : check_upload
  */
 
@@ -35,22 +35,17 @@ class io_module_check_upload_ctrl extends cApplicationCtrl{
         if(!IoUploadMgr::getById($upload, $p->io_upload_id))
             return false;
         
-        //termine
-        //if($upload->uploadComplete == "TRUE")
-        //    return RESULT(cResult::Ok,"IO_FILE_COMPLETED");
-        
+        // prepare le résultat
         $result = new cResult(cResult::Failed,"IO_FILE_UNCOMPLETED");
-        /*$result->addAtt("status","UNCOMPLETED");
-        $result->addAtt("packet_count",$upload->packetCount);
-        $result->addAtt("packet_size",$upload->packetSize);
-        $result->addAtt("file_size",$upload->fileSize);
-        $result->addAtt("last_packet_size",$upload->fileSize-(($upload->packetCount-1)*$upload->packetSize));
-        $result->addAtt("last_packet_num",$upload->packetCount-1);*/
+
+        //1. Test l’existence des paquets en base (IO_PACKET). Si un paquet est manquant, les paramètres de retour sont complétés et la fonction retourne IO_FILE_UNCOMPLETED
         for($i=0; $i<$upload->packetCount; $i++)
         {
+            // le paquet existe en base ?
             $query = "select count(*) as cnt from io_packet where io_upload_id='$p->io_upload_id' and packet_num=$i and packet_status=TRUE;";
             if(!$app->queryToObject($query,$resp))
                 return false;
+            // retourne les infos sur le paquet manquant
             if($resp->cnt == "0"){
                 $result->addAtt("packet_num",$i);
                 $result->addAtt("packet_offset",$upload->packetSize*$i);
@@ -61,6 +56,8 @@ class io_module_check_upload_ctrl extends cApplicationCtrl{
                 return RESULT_INST($result);
             }
         }
+        
+        //Ok, tous les paquets sont chargés
         return RESULT(cResult::Ok,"IO_FILE_COMPLETED");
     }
 };
