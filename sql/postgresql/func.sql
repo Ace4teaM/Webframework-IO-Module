@@ -138,3 +138,25 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;*/
+
+
+/*
+  Supprime un upload
+*/
+CREATE OR REPLACE FUNCTION io_delete_upload(
+        p_io_upload_id io_upload.io_upload_id%type
+)
+RETURNS RESULT AS
+$$
+DECLARE
+	v_result RESULT;
+BEGIN
+    delete from io_packet where io_upload_id = p_io_upload_id;
+    delete from io_upload where io_upload_id = p_io_upload_id;
+
+    /* ok */
+    select 'ERR_OK', 'IO_UPLOAD_DELETED' into v_result;
+    return v_result;
+END;
+$$
+LANGUAGE plpgsql;

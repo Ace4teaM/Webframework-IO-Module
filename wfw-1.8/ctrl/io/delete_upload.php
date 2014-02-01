@@ -21,67 +21,29 @@
 */
 
 /*
- * Prépare l'upload d'un fichier
+ * Supprime le téléchargement d'un fichier
  * Rôle : Visiteur
- * UC   : 
+ * UC   : delete_upload
  */
-
-class io_module_begin_upload_ctrl extends cApplicationCtrl{
-    public $fields    = array('file_size', 'filename', 'content_type');
+class io_module_delete_upload_ctrl extends cApplicationCtrl{
+    public $fields    = array('io_upload_id');
     public $op_fields = null;
 
     function main(iApplication $app, $app_path, $p)
     {
         $mode = $app->getCfgValue("io_module","storage_mode");
 
-        // 1. Vérifie la taille minimum/maximum allouée à l'upload
-        $max_size = $app->getCfgValue("io_module","max_upload_size");
-        if($p->file_size > $max_size)
-            return RESULT(cResult::Failed, "IO_FILE_TO_BIG");
-        if($p->file_size < 1)
-            return RESULT(cResult::Failed, "IO_ZERO_FILE_SIZE");
+        // 1. Supprime le fichier en local
+        $upload_dir       = $app->getCfgValue("io_module","upload_dir");
+        $upload_filename  = path($upload_dir,$io_upload_id);
+        if($mode=="file" && file_exists($upload_filename))
+            unlink ($upload_filename);
 
-        // 2. Crée le dossier d'upload si besoin
-        $upload_dir = $app->getCfgValue("io_module","upload_dir");
-        if($mode=="file" && !file_exists($upload_dir))
-            return RESULT(cResult::Failed, "IO_UPLOAD_DIR_NOT_EXISTS",array("DIR"=>$upload_dir));
-        //if(!file_exists($upload_dir) && (cmd("mkdir ".$upload_dir,$cmd_out)!=0))
-        //    return RESULT(cResult::Failed, "IO_CANT_CREATE_UPLOAD_DIR");
-
-        // 3. Initialise l'entree en BDD
-        $output_dir = $app->getCfgValue("io_module","public_output_dir");
-        if(!$app->callStoredProc('io_create_upload',
-            $p->file_size,
-            $p->filename,
-            $output_dir,
-            ($mode=="file") ? ($upload_dir) : NULL,
-            $_SERVER["REMOTE_ADDR"],
-            $p->content_type
+        // 2. Supprime de la BDD
+        if(!$app->callStoredProc('io_delete_upload',
+            $p->io_upload_id
         )) return false;
         $result = cResult::getLast();
-        //if(!IoUploadMgr::getById($uploadInst,cResult::getLast()->getAtt("IO_UPLOAD_ID")))
-        //    return false;
-
-        // 4. Prepare l'espace de stockage
-        $io_upload_id = $result->getAtt("IO_UPLOAD_ID");
-        $packet_size  = intval($result->getAtt("PACKET_SIZE")); //$app->getCfgValue("io_module","packet_size");
-        $packet_count = intval($result->getAtt("PACKET_COUNT")); // intval(ceil($p->file_size / $packet_size));
-        if($mode == "file"){
-            // 3a. Crée un fichier dummy qui va recevoir les données
-            $upload_file_name  = $upload_dir."/".$io_upload_id;
-            if($fp = fopen($upload_file_name, "wb"))
-            {
-                fseek($fp, $p->file_size-1, SEEK_SET);
-                fwrite($fp, 0xFF, 1);//dernier block
-                fclose($fp);
-            }
-            else
-                return RESULT(cResult::Failed, "IO_DUMMY_UPLOAD_FILE_CREATE");
-        }
-        else{
-            // 3a. Initialise les entrees en base de données
-            // (aucune action necessaire)
-        }
         
         //OK
         return RESULT_INST($result);
