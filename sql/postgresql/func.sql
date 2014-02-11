@@ -12,8 +12,6 @@
 CREATE OR REPLACE FUNCTION io_create_upload(
         p_file_size io_upload.file_size%type,
         p_filename io_upload.filename%type,
-        p_output_path io_upload.output_path%type,
-        p_upload_path io_upload.upload_path%type, -- si NULL, l'upload est réalisé en BDD
         p_client_ip io_upload.upload_client_ip%type,
         p_content_type io_upload.content_type%type
 )
@@ -46,8 +44,6 @@ BEGIN
             CHECKSUM,
             PACKET_SIZE,
             FILENAME,
-            OUTPUT_PATH,
-            UPLOAD_PATH,
             UPLOAD_CLIENT_IP,
             FILE_SIZE,
             PACKET_COUNT,
@@ -58,8 +54,6 @@ BEGIN
             NULL,
             v_packet_size,
             p_filename,
-            p_output_path,
-            p_upload_path,
             p_client_ip,
             p_file_size,
             v_packet_count,
