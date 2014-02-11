@@ -31,6 +31,13 @@
 */
 class IoUpload
 {
+   public function getId(){
+      return $this->ioUploadId;
+  }
+   public function setId($id){
+      return $this->ioUploadId = $id;
+  }
+
     
     /**
     * @var      String
@@ -51,16 +58,6 @@ class IoUpload
     * @var      String
     */
     public $filename;
-    
-    /**
-    * @var      String
-    */
-    public $outputPath;
-    
-    /**
-    * @var      String
-    */
-    public $uploadPath;
     
     /**
     * @var      String
@@ -114,8 +111,6 @@ class IoUploadMgr
         $node->appendChild($doc->createTextElement("checksum",$inst->checksum));
         $node->appendChild($doc->createTextElement("packet_size",$inst->packetSize));
         $node->appendChild($doc->createTextElement("filename",$inst->filename));
-        $node->appendChild($doc->createTextElement("output_path",$inst->outputPath));
-        $node->appendChild($doc->createTextElement("upload_path",$inst->uploadPath));
         $node->appendChild($doc->createTextElement("upload_client_ip",$inst->uploadClientIp));
         $node->appendChild($doc->createTextElement("begin_date",$inst->beginDate));
         $node->appendChild($doc->createTextElement("file_size",$inst->fileSize));
@@ -170,8 +165,6 @@ class IoUploadMgr
           $inst->checksum = $result->fetchValue("checksum");
           $inst->packetSize = $result->fetchValue("packet_size");
           $inst->filename = $result->fetchValue("filename");
-          $inst->outputPath = $result->fetchValue("output_path");
-          $inst->uploadPath = $result->fetchValue("upload_path");
           $inst->uploadClientIp = $result->fetchValue("upload_client_ip");
           $inst->beginDate = $result->fetchValue("begin_date");
           $inst->fileSize = $result->fetchValue("file_size");
@@ -230,9 +223,68 @@ class IoUploadMgr
     }
     
    /*
+      @brief Insert single entry with generated id
+      @param $inst WriterDocument instance pointer to initialize
+      @param $add_fields Array of columns names/columns values of additional fields
+      @param $db iDataBase derived instance
+    */
+    public static function insert(&$inst,$add_fields=null,$db=null){
+       //obtient la base de donnees courrante
+       global $app;
+       if(!$db && !$app->getDB($db))
+         return false;
+      
+       //id initialise ?
+       if(!isset($inst->ioUploadId)){
+            $table_name = 'IO_Upload';
+            $table_id_name = $table_name.'_id';
+           if(!$db->execute("select * from new_id('$table_name','$table_id_name');",$result))
+              return RESULT(cResult::Failed, cApplication::EntityMissingId);
+           $inst->ioUploadId = intval($result->fetchValue("new_id"));
+       }
+       
+      //execute la requete
+       $query = "INSERT INTO IO_Upload (";
+       $query .= " io_upload_id,";
+       $query .= " checksum,";
+       $query .= " packet_size,";
+       $query .= " filename,";
+       $query .= " upload_client_ip,";
+       $query .= " begin_date,";
+       $query .= " file_size,";
+       $query .= " upload_complete,";
+       $query .= " packet_count,";
+       $query .= " content_type,";
+       if(is_array($add_fields))
+           $query .= implode(',',array_keys($add_fields)).',';
+       $query = substr($query,0,-1);//remove last ','
+       $query .= ")";
+       
+       $query .= " VALUES(";
+       $query .= $db->parseValue($inst->ioUploadId).",";
+       $query .= $db->parseValue($inst->checksum).",";
+       $query .= $db->parseValue($inst->packetSize).",";
+       $query .= $db->parseValue($inst->filename).",";
+       $query .= $db->parseValue($inst->uploadClientIp).",";
+       $query .= $db->parseValue($inst->beginDate).",";
+       $query .= $db->parseValue($inst->fileSize).",";
+       $query .= $db->parseValue($inst->uploadComplete).",";
+       $query .= $db->parseValue($inst->packetCount).",";
+       $query .= $db->parseValue($inst->contentType).",";
+       if(is_array($add_fields))
+           $query .= implode(',',$add_fields).',';
+       $query = substr($query,0,-1);//remove last ','
+       $query .= ")";
+       
+       if($db->execute($query,$result))
+          return true;
+
+       return false;
+    }
+    
+   /*
       @brief Update single entry by id
       @param $inst WriterDocument instance pointer to initialize
-      @param $id Primary unique identifier of entry to retreive
       @param $db iDataBase derived instance
     */
     public static function update(&$inst,$db=null){
@@ -243,7 +295,7 @@ class IoUploadMgr
       
        //id initialise ?
        if(!isset($inst->ioUploadId))
-           return RESULT(cResult::Failed, cApplication::entityMissingId);
+           return RESULT(cResult::Failed, cApplication::EntityMissingId);
       
       //execute la requete
        $query = "UPDATE IO_Upload SET";
@@ -251,8 +303,6 @@ class IoUploadMgr
        $query .= " checksum =".$db->parseValue($inst->checksum).",";
        $query .= " packet_size =".$db->parseValue($inst->packetSize).",";
        $query .= " filename =".$db->parseValue($inst->filename).",";
-       $query .= " output_path =".$db->parseValue($inst->outputPath).",";
-       $query .= " upload_path =".$db->parseValue($inst->uploadPath).",";
        $query .= " upload_client_ip =".$db->parseValue($inst->uploadClientIp).",";
        $query .= " begin_date =".$db->parseValue($inst->beginDate).",";
        $query .= " file_size =".$db->parseValue($inst->fileSize).",";

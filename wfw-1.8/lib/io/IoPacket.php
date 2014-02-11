@@ -31,6 +31,13 @@
 */
 class IoPacket
 {
+   public function getId(){
+      return $this->ioPacketId;
+  }
+   public function setId($id){
+      return $this->ioPacketId = $id;
+  }
+
     
     /**
     * @var      int
@@ -174,9 +181,56 @@ class IoPacketMgr
     }
     
    /*
+      @brief Insert single entry with generated id
+      @param $inst WriterDocument instance pointer to initialize
+      @param $add_fields Array of columns names/columns values of additional fields
+      @param $db iDataBase derived instance
+    */
+    public static function insert(&$inst,$add_fields=null,$db=null){
+       //obtient la base de donnees courrante
+       global $app;
+       if(!$db && !$app->getDB($db))
+         return false;
+      
+       //id initialise ?
+       if(!isset($inst->ioPacketId)){
+            $table_name = 'IO_packet';
+            $table_id_name = $table_name.'_id';
+           if(!$db->execute("select * from new_id('$table_name','$table_id_name');",$result))
+              return RESULT(cResult::Failed, cApplication::EntityMissingId);
+           $inst->ioPacketId = intval($result->fetchValue("new_id"));
+       }
+       
+      //execute la requete
+       $query = "INSERT INTO IO_packet (";
+       $query .= " io_packet_id,";
+       $query .= " base64_data,";
+       $query .= " packet_status,";
+       $query .= " packet_num,";
+       if(is_array($add_fields))
+           $query .= implode(',',array_keys($add_fields)).',';
+       $query = substr($query,0,-1);//remove last ','
+       $query .= ")";
+       
+       $query .= " VALUES(";
+       $query .= $db->parseValue($inst->ioPacketId).",";
+       $query .= $db->parseValue($inst->base64Data).",";
+       $query .= $db->parseValue($inst->packetStatus).",";
+       $query .= $db->parseValue($inst->packetNum).",";
+       if(is_array($add_fields))
+           $query .= implode(',',$add_fields).',';
+       $query = substr($query,0,-1);//remove last ','
+       $query .= ")";
+       
+       if($db->execute($query,$result))
+          return true;
+
+       return false;
+    }
+    
+   /*
       @brief Update single entry by id
       @param $inst WriterDocument instance pointer to initialize
-      @param $id Primary unique identifier of entry to retreive
       @param $db iDataBase derived instance
     */
     public static function update(&$inst,$db=null){
@@ -187,7 +241,7 @@ class IoPacketMgr
       
        //id initialise ?
        if(!isset($inst->ioPacketId))
-           return RESULT(cResult::Failed, cApplication::entityMissingId);
+           return RESULT(cResult::Failed, cApplication::EntityMissingId);
       
       //execute la requete
        $query = "UPDATE IO_packet SET";

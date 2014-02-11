@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8 (WFW)                            */
-/* Date de création :  08/04/2013 17:10:34                      */
+/* Date de création :  11/02/2014 20:16:08                      */
 /*==============================================================*/
 
 
@@ -28,8 +28,6 @@ create table IO_UPLOAD (
    CHECKSUM             VARCHAR(256)         null,
    PACKET_SIZE          INT4                 not null,
    FILENAME             VARCHAR(260)         not null,
-   OUTPUT_PATH          VARCHAR(260)         null,
-   UPLOAD_PATH          VARCHAR(260)         not null,
    UPLOAD_CLIENT_IP     VARCHAR(200)         not null,
    BEGIN_DATE           TIMESTAMP            not null,
    FILE_SIZE            INT4                 not null,
