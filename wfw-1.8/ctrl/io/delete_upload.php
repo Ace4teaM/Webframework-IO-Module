@@ -31,15 +31,7 @@ class io_module_delete_upload_ctrl extends cApplicationCtrl{
 
     function main(iApplication $app, $app_path, $p)
     {
-        $mode = $app->getCfgValue("io_module","storage_mode");
-
-        // 1. Supprime le fichier en local
-        $upload_dir       = $app->getCfgValue("io_module","upload_dir");
-        $upload_filename  = path($upload_dir,$io_upload_id);
-        if($mode=="file" && file_exists($upload_filename))
-            unlink ($upload_filename);
-
-        // 2. Supprime de la BDD
+        // 1. Supprime de la BDD
         if(!$app->callStoredProc('io_delete_upload',
             $p->io_upload_id
         )) return false;

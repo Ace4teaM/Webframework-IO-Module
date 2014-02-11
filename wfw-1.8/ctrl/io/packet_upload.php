@@ -57,41 +57,7 @@ class io_module_packet_upload_ctrl extends cApplicationCtrl{
         if(strlen($data) != $packet_size)
             return RESULT(cResult::Failed,"IO_INVALID_DATA_SIZE",array("message"=>(strlen($data)." != $packet_size")));
         
-        // 4. Ecrit les données à la volée dans le fichier 
-        if($mode == "file")
-        {
-            $upload_file_name  = $upload->uploadPath."/".$p->io_upload_id;
-            
-            // ouvre le fichier en ecriture
-            if(!($fp = fopen($upload_file_name, "c")))
-                return RESULT(cResult::Failed, "IO_FILE_OPEN");
-
-            // verifie les limites
-            $fstat = fstat($fp);
-            $fp_size = intval($fstat['size']);
-            //print_r($fstat); exit;
-            if($packet_offset+$packet_size > $fp_size)
-            {
-                fclose($fp);
-                return RESULT(cResult::Failed, "IO_FILE_OVERFLOW");
-            }
-            
-            // deplace a l'offset
-            if(fseek($fp,$packet_offset,SEEK_SET)!=0)
-            {
-                fclose($fp);
-                return RESULT(cResult::Failed, "IO_FILE_SEEK_ERROR");
-            }
-            // ecrit les données
-            if(!fwrite($fp, $data))
-            {
-                fclose($fp);
-                return RESULT(cResult::Failed, "IO_FILE_WRITE_ERROR");
-            }
-            fclose($fp);
-        }
-
-        //envoi les données en base
+        // 4. Actualise ou insert les données dans la table IO_PACKET
         return $app->callStoredProc('io_set_packet',
             $p->io_upload_id,
             $p->packet_num,

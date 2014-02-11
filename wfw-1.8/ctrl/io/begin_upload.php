@@ -41,20 +41,11 @@ class io_module_begin_upload_ctrl extends cApplicationCtrl{
         if($p->file_size < 1)
             return RESULT(cResult::Failed, "IO_ZERO_FILE_SIZE");
 
-        // 2. Crée le dossier d'upload si besoin
-        $upload_dir = $app->getCfgValue("io_module","upload_dir");
-        if($mode=="file" && !file_exists($upload_dir))
-            return RESULT(cResult::Failed, "IO_UPLOAD_DIR_NOT_EXISTS",array("DIR"=>$upload_dir));
-        //if(!file_exists($upload_dir) && (cmd("mkdir ".$upload_dir,$cmd_out)!=0))
-        //    return RESULT(cResult::Failed, "IO_CANT_CREATE_UPLOAD_DIR");
-
-        // 3. Initialise l'entree en BDD
+        // 2. Initialise l'entree en BDD
         $output_dir = $app->getCfgValue("io_module","public_output_dir");
         if(!$app->callStoredProc('io_create_upload',
             $p->file_size,
             $p->filename,
-            $output_dir,
-            ($mode=="file") ? ($upload_dir) : NULL,
             $_SERVER["REMOTE_ADDR"],
             $p->content_type
         )) return false;
@@ -62,27 +53,6 @@ class io_module_begin_upload_ctrl extends cApplicationCtrl{
         //if(!IoUploadMgr::getById($uploadInst,cResult::getLast()->getAtt("IO_UPLOAD_ID")))
         //    return false;
 
-        // 4. Prepare l'espace de stockage
-        $io_upload_id = $result->getAtt("IO_UPLOAD_ID");
-        $packet_size  = intval($result->getAtt("PACKET_SIZE")); //$app->getCfgValue("io_module","packet_size");
-        $packet_count = intval($result->getAtt("PACKET_COUNT")); // intval(ceil($p->file_size / $packet_size));
-        if($mode == "file"){
-            // 3a. Crée un fichier dummy qui va recevoir les données
-            $upload_file_name  = $upload_dir."/".$io_upload_id;
-            if($fp = fopen($upload_file_name, "wb"))
-            {
-                fseek($fp, $p->file_size-1, SEEK_SET);
-                fwrite($fp, 0xFF, 1);//dernier block
-                fclose($fp);
-            }
-            else
-                return RESULT(cResult::Failed, "IO_DUMMY_UPLOAD_FILE_CREATE");
-        }
-        else{
-            // 3a. Initialise les entrees en base de données
-            // (aucune action necessaire)
-        }
-        
         //OK
         return RESULT_INST($result);
     }
