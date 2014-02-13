@@ -273,20 +273,17 @@ class IOModule implements iModule
             $dst_h = intval(($size / $src_w) * $src_h);
         }
 
-        if (!$dst_w || !$dst_h)
-            return RESULT(cResult::Failed, "IO_INVALID_DST_SIZE");
-
         //
         // Crée la nouvelle image
         //
-        $new_image = imagecreatetruecolor($dst_w, $dst_h);
+        $new_image = imagecreatetruecolor($size, $size);
         if (!$new_image)
             return RESULT(cResult::Failed, "IO_CREATE_IMAGE");
         imagealphablending($new_image, true);
         imagesavealpha($new_image, true);
 
         //copie dans la nouvelle image
-        imagecopyresampled($new_image, $image, 0, 0, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+        imagecopyresampled($new_image, $image, 0, 0, $src_x, $src_y, $size, $size, $src_w, $src_h);
 
         RESULT_OK();
         return $new_image;
@@ -304,6 +301,11 @@ class IOModule implements iModule
         $src_w = imagesx($image);
         $src_h = imagesy($image);
 
+        $size = intval($size);
+
+        if (!$size)
+            return RESULT(cResult::Failed, "IO_INVALID_DST_SIZE $dst_w $dst_h");
+
         //
         // Calcule la taille de destination (en pixels)
         //
@@ -316,7 +318,7 @@ class IOModule implements iModule
         }
 
         if (!$dst_w || !$dst_h)
-            return RESULT(cResult::Failed, "IO_INVALID_DST_SIZE");
+            return RESULT(cResult::Failed, "IO_INVALID_DST_SIZE $dst_w $dst_h");
 
         //
         // Crée la nouvelle image
