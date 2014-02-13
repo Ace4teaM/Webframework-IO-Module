@@ -42,7 +42,6 @@ class io_module_begin_upload_ctrl extends cApplicationCtrl{
             return RESULT(cResult::Failed, "IO_ZERO_FILE_SIZE");
 
         // 2. Initialise l'entree en BDD
-        $output_dir = $app->getCfgValue("io_module","public_output_dir");
         if(!$app->callStoredProc('io_create_upload',
             $p->file_size,
             $p->filename,
