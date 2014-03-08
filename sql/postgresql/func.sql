@@ -70,8 +70,6 @@ LANGUAGE plpgsql;
 /*
   Définit une paquet
 */
-DROP SEQUENCE IF EXISTS io_set_packet_seq;
-CREATE SEQUENCE io_set_packet_seq START 1;
 CREATE OR REPLACE FUNCTION io_set_packet(
         p_io_upload_id io_upload.io_upload_id%type,
         p_packet_num io_packet.packet_num%type,
@@ -89,7 +87,7 @@ BEGIN
         update io_packet set packet_status = p_packet_status and base64_data = p_base64_data
             where io_packet_id = v_io_packet_id;
     else
-        select nextval('io_set_packet_seq') into v_io_packet_id;
+        select nextval('io_packet_seq') into v_io_packet_id;
         insert into io_packet
             VALUES(v_io_packet_id,p_io_upload_id,p_base64_data,p_packet_status,p_packet_num);
     end if;
