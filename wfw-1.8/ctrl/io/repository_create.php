@@ -32,69 +32,38 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
     
     function main(iApplication $app, $app_path, $p)
     {
-        $timestamp   = time();
+        $remote_ip = (getenv('HTTP_X_FORWARDED_FOR'))? getenv('HTTP_X_FORWARDED_FOR') : getenv('REMOTE_ADDR'); 
         
         //
-        // 1. Génère le nom de dépôt
+        // 1. Crée le dépot
         //
-        if($p->repository_id === null)
-            $p->repository_id = (rand(100,900).'-'.$timestamp);
         
-        $repository_path = $app->getCfgValue("io_module","repository_data_path");
-        $file_path = $repository_path."/".$p->repository_id.".xml";
-        $data_path = $repository_path."/".$p->repository_id;
+        if(!$app->callStoredProc("io_create_repository", $p->io_repository_id, $remote_ip))
+            return false;
+        $result = cResult::getLast();
+        
+        $p->io_repository_id = $result->getAtt("io_repository_id");
         
         //
-        // 2. Vérifie si le dossier existe
+        // 2. Initialise les données du dépot
         //
-        if(!is_dir($repository_path))
-            return RESULT(cResult::Failed, IOModule::RepositoryPathNotExists, array("DIR"=>$repository_path));
 
-        if(file_exists($file_path))
-            return RESULT(cResult::Failed, IOModule::RepositoryAlreadyExists);
-
-
-        //
-        // 3. Crée le document XML avec l'ensemble des données reçues en paramètres
-        //
-        $fields_doc = new XMLDocument("1.0", "utf-8");
-        $fields_doc->appendChild($fields_doc->createElement('data'));
-        
         //enregistre les arguments
         foreach($this->att as $name=>$value){
             if(!cInputIdentifier::isValid($name))
                 continue;
-            $fields_doc->documentElement->appendChild($fields_doc->createTextElement($name,$value));
+            $app->callStoredProc("io_set_repository_entry", $p->io_repository_id, $name, $value);
         }
         
         // ajoute les parametres d'entree
-        $fields_doc->appendAssocArray($fields_doc->documentElement,$p);
-        
-        // ajoute l'IP du client
-        $remote_ip = (getenv('HTTP_X_FORWARDED_FOR'))? getenv('HTTP_X_FORWARDED_FOR') : getenv('REMOTE_ADDR'); 
-        $fields_doc->documentElement->appendChild($fields_doc->createTextElement('remote_ip',$remote_ip));
-        
-        // ajoute la date actuelle
-        $fields_doc->documentElement->appendChild($fields_doc->createTextElement('timestamp',$timestamp));
-        
-        // ajoute la nom du fichier
-        $fields_doc->documentElement->appendChild($fields_doc->createTextElement('filename',$p->repository_id.".xml"));
+        foreach($p as $name=>$value){
+            if(!cInputIdentifier::isValid($name))
+                continue;
+            $app->callStoredProc("io_set_repository_entry", $p->io_repository_id, $name, $value);
+        }
         
         //
-        // Sauvegarde le fichier XML
-        //
-        if(!$fields_doc->save($file_path))
-            return RESULT(cResult::Failed, cApplication::CantCreateResource, array("file"=>$file_path));
-        chmod($file_path,0644);
-
-        //
-        // 4. Crée le dossier de données (si besoin)
-        //      
-        if(($p->use_data) && !file_exists($data_path) && (cmd("mkdir ".$data_path,$cmd_out)!=0))
-            return RESULT(cResult::Failed, cApplication::CantCreateResource, array("file"=>$data_path));
-
-        //
-        // 5. Envoie un mail de notification
+        // 3. Envoie un mail de notification
         //
         $template = $app->getCfgValue("io_module","repository_notify_template");
         $mail     = $app->getCfgValue("io_module","repository_notify_mail");
@@ -121,19 +90,6 @@ class io_module_repository_create_ctrl extends cApplicationCtrl{
             //envoie le message
             if(!MailModule::sendMessage($msg))
                 return false;
-        }
-        
-        //
-        // 6. Attache un événement
-        //
-        if($p->is_event){
-            $link_filename = $app->getCfgValue("io_module","repository_event_path")."/".$p->repository_id;
-            
-            if(file_exists($link_filename))
-                unlink($link_filename);
-
-            if(!symlink($file_path, $link_filename)) 
-                return RESULT(cResult::System, IOModule::CantLinkEvent);
         }
         
         return RESULT(cResult::Ok,cResult::Success,array("repository_id"=>$p->repository_id));

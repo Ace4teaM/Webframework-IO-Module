@@ -9,6 +9,9 @@
 /*
     Sequences
     Liste des sequences d'auto incrementation pour les identifiants 
-*/
+
 DROP SEQUENCE IF EXISTS io_packet_seq;
 CREATE SEQUENCE io_packet_seq START 1;
+
+DROP SEQUENCE IF EXISTS io_repository_entry_seq;
+CREATE SEQUENCE io_repository_entry_seq START 1;*/

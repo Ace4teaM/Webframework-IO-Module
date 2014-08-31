@@ -30,39 +30,28 @@ class io_module_repository_view_ctrl extends cApplicationCtrl{
     public $fields    = array('repository_id');
     public $op_fields = array('repository_pwd');
     
-    public $data = null;
+    public $att = array();
     
     function main(iApplication $app, $app_path, $p)
     {
-        $timestamp   = time();
-        
-        //
-        $file_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id.".xml";
-        $data_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id;
-        
-        //
-        // 1. vérifie si le dossier existe
-        //
-        if(!file_exists($file_path))
-            return RESULT(cResult::Failed, IOModule::RepositoryNotExists);
-
-        //
-        // 2. Charge le document
-        //
-        $doc = new XMLDocument("1.0", "utf-8");
-        if(!$doc->load($file_path))
-            return RESULT(cResult::Failed, XMLDocument::loadXML);
-        
         //
         // 3. Vérifie le mot-de-passe
         //
-        $pwdNode = $doc->one("repository_pwd",$doc->documentElement);
+        /*$pwdNode = $doc->one("repository_pwd",$doc->documentElement);
         if($pwdNode && !empty($pwdNode->nodeValue)){
             if($pwdNode->nodeValue != $p->repository_pwd)
                 return RESULT(cResult::Failed, IoModule::InvalidPassword);
-        }
+        }*/
         
-        $this->data = $doc;
+        //liste les données
+        $result = null;
+        if($db->execute("select name, value from io_repository_entry where io_repository_id=".$db->parseValue($p->io_repository_id),$result)){
+            for($i=0; $i<$result->rowCount(); $i++){
+                if(!$db->seek($i))
+                    continue;
+                $this->att[$result->fetchValue('name')] = $result->fetchValue('value');
+            }
+        }
         
         return RESULT(cResult::Ok,cResult::Success,array("repository_id"=>$p->repository_id));
     }
@@ -74,8 +63,11 @@ class io_module_repository_view_ctrl extends cApplicationCtrl{
         
         switch($format){
             case "text/xml":
-                $doc = $this->data;
-                return '<?xml version="1.0" encoding="UTF-8" ?>'.$doc->saveXML( $doc->documentElement );
+                // 2. Crée le document
+                $doc = new XMLDocument("1.0", "utf-8");
+                $rootNode = $doc->appendChild($doc->createElement('data'));
+                $doc->appendAssocArray($rootNode,$this->att);
+                return $doc->SaveXML();
         }
         return parent::output($app, $format, $att, $result);
     }

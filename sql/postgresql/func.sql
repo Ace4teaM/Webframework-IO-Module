@@ -87,7 +87,7 @@ BEGIN
         update io_packet set packet_status = p_packet_status and base64_data = p_base64_data
             where io_packet_id = v_io_packet_id;
     else
-        select nextval('io_packet_seq') into v_io_packet_id;
+        select nextval(pg_get_serial_sequence('io_packet', 'io_packet_id')) into v_io_packet_id;
         insert into io_packet
             VALUES(v_io_packet_id,p_io_upload_id,p_base64_data,p_packet_status,p_packet_num);
     end if;
@@ -150,6 +150,98 @@ BEGIN
 
     /* ok */
     select 'ERR_OK', 'IO_UPLOAD_DELETED' into v_result;
+    return v_result;
+END;
+$$
+LANGUAGE plpgsql;
+
+/*
+  Initialise un depot
+*/
+CREATE OR REPLACE FUNCTION io_create_repository(
+        p_io_repository_id io_repository.io_repository_id%type,
+        p_remote_ip io_repository.remote_ip%type
+)
+RETURNS RESULT AS
+$$
+DECLARE
+	v_io_repository_id varchar;
+	v_result RESULT;
+BEGIN
+
+    --1. Génère le nom de dépôt
+    if p_io_repository_id is null then
+	select trim(to_char(100 + (random() * 800),'999D')||'-'||round(extract(epoch from now()))) into v_io_repository_id;
+    else
+	select trim(p_io_repository_id) into v_io_repository_id;
+    end if;
+
+    --2. Insert
+    insert into io_repository (io_repository_id, remote_ip, create_date) values(v_io_repository_id, p_remote_ip, current_timestamp);
+
+    -- Termine
+    select 'ERR_OK', 'IO_REPOSITORY_CREATED', 'IO_REPOSITORY_ID:'||v_io_repository_id||';' into v_result;
+    return v_result;
+END;
+$$
+LANGUAGE plpgsql;
+
+/*
+  Définit une valeur assocative d'un dépot
+*/
+CREATE OR REPLACE FUNCTION io_set_repository_entry(
+        p_io_repository_id io_repository.io_repository_id%type,
+        p_name io_repository_entry.name%type,
+        p_value io_repository_entry.value%type
+)
+RETURNS RESULT AS
+$$
+DECLARE
+	v_io_repository_entry_id int;
+	v_name varchar;
+	v_value varchar;
+	v_result RESULT;
+BEGIN
+
+    -- Prépare les arguments
+    select trim(p_name) into v_name;
+    select trim(p_value) into v_value;
+
+    --1. Vérifie si entrée existe
+    select io_repository_entry_id into v_io_repository_entry_id from io_repository_entry where name = v_name and io_repository_id = p_io_repository_id;
+
+    --2. Insert/Actualise la valeur
+    if(v_io_repository_entry_id is null) then
+	select nextval(pg_get_serial_sequence('io_repository_entry', 'io_repository_entry_id')) into v_io_repository_entry_id;
+	insert into io_repository_entry (io_repository_entry_id,io_repository_id,name,value) values(v_io_repository_entry_id,p_io_repository_id,v_name,v_value);
+    else
+	update io_repository_entry set name = v_name, value = v_value where io_repository_entry_id = v_io_repository_entry_id;
+    end if;
+
+    -- Termine
+    select 'ERR_OK', 'IO_REPOSITORY_CREATED', 'IO_REPOSITORY_ENTRY_ID:'||v_io_repository_entry_id||';' into v_result;
+    return v_result;
+END;
+$$
+LANGUAGE plpgsql;
+
+/*
+  Supprime un depot
+*/
+CREATE OR REPLACE FUNCTION io_delete_repository(
+        p_io_repository_id io_repository.io_repository_id%type
+)
+RETURNS RESULT AS
+$$
+DECLARE
+	v_result RESULT;
+BEGIN
+
+    delete from io_repository_entry where io_repository_id = p_io_repository_id;
+    delete from io_repository where io_repository_id = p_io_repository_id;
+
+    -- Termine
+    select 'ERR_OK', 'IO_REPOSITORY_DELETED', 'IO_REPOSITORY_ID:'||p_io_repository_id||';' into v_result;
     return v_result;
 END;
 $$

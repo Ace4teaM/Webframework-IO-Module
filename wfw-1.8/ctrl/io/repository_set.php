@@ -36,49 +36,24 @@ class io_module_repository_set_ctrl extends cApplicationCtrl{
 
     function main(iApplication $app, $app_path, $p)
     {
-        $timestamp   = time();
-        $file_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id.".xml";
-        $data_path = $app->getCfgValue("io_module","repository_data_path")."/".$p->repository_id;
-        
         //
-        // 1 Vérifie si le dossier existe
+        // 1. Vérifie le mot-de-passe (mode utilisateur)
         //
-        if(!file_exists($file_path))
-            return RESULT(cResult::Failed, IOModule::RepositoryNotExists);
-
-        //
-        // 2. Charge le document XML
-        //
-        $fields_doc = new XMLDocument("1.0", "utf-8");
-        $fields_doc->load($file_path);
-        
-        //
-        // 3. Vérifie le mot-de-passe (mode utilisateur)
-        //
-        if($this->hasRole() & Application::UserRole){
+        /*if($this->hasRole() & Application::UserRole){
             $node = $fields_doc->one("repository_pwd",$fields_doc->documentElement);
             if($node && !empty($node->nodeValue) && $node->nodeValue != $p->repository_pwd)
                 return RESULT(cResult::Failed, IOModule::InvalidPassword);
-        }
+        }*/
         
         //
-        // 4. Enregistre les arguments
+        // 2. Enregistre les arguments
         //
         foreach($this->att as $name=>$value){
             if(!cInputIdentifier::isValid($name))
                 continue;
-            $node = $fields_doc->one($name,$fields_doc->documentElement);
-            if($node)
-                $node->nodeValue = $value;
-            else
-                $fields_doc->documentElement->appendChild($fields_doc->createTextElement($name,$value));
+            if(!$app->callStoredProc("io_set_repository_entry", $p->io_repository_id, $name, $value))
+                return false;
         }
-
-        //
-        // Sauvegarde le fichier XML
-        //
-        if(!$fields_doc->save($file_path))
-            return RESULT(cResult::Failed, cApplication::CantCreateResource, array("file"=>$file_path));
 
         return RESULT(cResult::Ok,cResult::Success,array("repository_id"=>$p->repository_id));
     }
