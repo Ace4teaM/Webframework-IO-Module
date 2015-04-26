@@ -20,19 +20,22 @@
     ---------------------------------------------------------------------------------------------------------------------------------------
 */
 
-/**
- * Gestionnaire de courriers électroniques
- * Librairie PHP5
- */
-
 
 require_once("class/bases/iModule.php");
 require_once("class/bases/socket.php");
 require_once("xml_default.php");
 
-    
+/**
+ * Gestionnaire de courriers électroniques
+ * Librairie PHP5
+ */
 class IOModule implements iModule
 {
+    //--------------------------------------------------------
+    // Constantes des erreurs
+    // @class IOModule
+    //--------------------------------------------------------
+    
     //Errors
     const RepositoryAlreadyExists  = "IO_REPOSITORY_ALREADY_EXISTS";
     const CantLinkEvent            = "IO_CANT_LINK_EVENT";
@@ -40,6 +43,11 @@ class IOModule implements iModule
     const InvalidPassword          = "IO_REPOSITORY_INVALID_PWD";
     const RepositoryPathNotExists  = "IO_REPOSITORY_PATH_NOT_EXISTS";
     const UploadNotExists          = "IO_UPLOAD_NOT_EXISTS";
+    
+    //--------------------------------------------------------
+    // Méthodes
+    // @class IOModule
+    //--------------------------------------------------------
     
     /**
      * @brief Initialise le module
@@ -243,7 +251,7 @@ class IOModule implements iModule
     }
     
     /**
-     * Tronque une image en miniature
+     * @brief Tronque une image en miniature
      * @param type $image    Image source
      * @param type $size     Hauteur/Largeur désirée de la destination
      * @param type $src_w    Largeur utilisé dans l'image source
@@ -290,7 +298,7 @@ class IOModule implements iModule
     }
     
     /**
-     * Tronque la taille d'une image 
+     * @brief Tronque la taille d'une image 
      * @param type $image    Image source
      * @param type $size     Hauteur/Largeur maximale désirée pour la destination
      * @return Résultat de procédure

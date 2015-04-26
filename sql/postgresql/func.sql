@@ -1,13 +1,19 @@
 /*
-  (C)2013 AUGUEY Thomas
+  (C)2013,2015 AUGUEY Thomas
   PL/pgSQL
-  Module Mailing (WFW_MAILING)
+  Module IO
   
   PostgreSQL v8.3 (version minimum requise)
 */
 
-/*
+/**
   Initialise un upload
+
+  Parametres:
+		p_file_size    : Taille du fichier en bytes
+		p_filename     : Nom du fichier
+		p_client_ip    : Adresse IP du client
+		p_content_type : Type MIME du contenu
 */
 CREATE OR REPLACE FUNCTION io_create_upload(
         p_file_size io_upload.file_size%type,
@@ -67,8 +73,14 @@ END;
 $$
 LANGUAGE plpgsql;
 
-/*
+/**
   Définit une paquet
+
+  Parametres:
+		p_io_upload_id  : Identifiant de l'upload
+		p_packet_num    : Numéro du paquet
+		p_packet_status : ...
+		p_base64_data   : Données du paquet (encodé en base64)
 */
 CREATE OR REPLACE FUNCTION io_set_packet(
         p_io_upload_id io_upload.io_upload_id%type,
@@ -134,8 +146,11 @@ $$
 LANGUAGE plpgsql;*/
 
 
-/*
+/**
   Supprime un upload
+
+  Parametres:
+		p_io_upload_id  : Identifiant de l'upload
 */
 CREATE OR REPLACE FUNCTION io_delete_upload(
         p_io_upload_id io_upload.io_upload_id%type
@@ -155,8 +170,12 @@ END;
 $$
 LANGUAGE plpgsql;
 
-/*
+/**
   Initialise un depot
+  
+  Parametres:
+		p_io_repository_id  : Identifiant du dépot
+		p_remote_ip         : IP du client
 */
 CREATE OR REPLACE FUNCTION io_create_repository(
         p_io_repository_id io_repository.io_repository_id%type,
@@ -186,8 +205,13 @@ END;
 $$
 LANGUAGE plpgsql;
 
-/*
+/**
   Définit une valeur assocative d'un dépot
+  
+  Parametres:
+		p_io_repository_id  : Identifiant du dépot
+		p_name              : Nom de l'entrée
+		p_value             : Valeur de l'entrée
 */
 CREATE OR REPLACE FUNCTION io_set_repository_entry(
         p_io_repository_id io_repository.io_repository_id%type,
@@ -225,8 +249,11 @@ END;
 $$
 LANGUAGE plpgsql;
 
-/*
+/**
   Supprime un depot
+  
+  Parametres:
+		p_io_repository_id  : Identifiant du dépot
 */
 CREATE OR REPLACE FUNCTION io_delete_repository(
         p_io_repository_id io_repository.io_repository_id%type
